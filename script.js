@@ -1,6 +1,6 @@
 /* ==========================================================================
    ATELIER KADJA - SCRIPT PRINCIPAL
-   Version corrigée : loader, hero vidéo, son, sliders, reveal et PWA
+   Version corrigée : loader, hero vidéo, son, sliders, reveal, carrousels et PWA
    ========================================================================== */
 
 (() => {
@@ -185,6 +185,38 @@
     });
   };
 
+  const initAssiriCarousel = () => {
+    const carousel = document.querySelector('.assiri-carousel');
+    if (!carousel) return;
+
+    const slides = carousel.querySelectorAll('.assiri-slide');
+    const prevBtn = carousel.querySelector('.assiri-prev');
+    const nextBtn = carousel.querySelector('.assiri-next');
+    const counter = carousel.querySelector('.assiri-carousel-counter');
+    let currentIndex = 0;
+
+    const updateSlide = (index) => {
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+      if (counter) counter.textContent = `${index + 1} / ${slides.length}`;
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateSlide(currentIndex);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateSlide(currentIndex);
+      });
+    }
+  };
+
   const initReveal = () => {
     const revealElements = document.querySelectorAll('.reveal');
 
@@ -249,6 +281,7 @@
     initReveal();
     initSmoothNavigation();
     initServiceWorker();
+    initAssiriCarousel();
   };
 
   if (document.readyState === 'loading') {
