@@ -234,6 +234,22 @@ section {
 .carousel-track {
   display: flex;
   gap: 20px;
+  width: max-content;
+  animation: scroll 25s linear infinite;
+}
+.carousel-track:hover {
+  animation-play-state: paused;
+}
+.reverse-track {
+  animation: scroll-reverse 25s linear infinite;
+}
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 10px)); }
+}
+@keyframes scroll-reverse {
+  0% { transform: translateX(calc(-50% - 10px)); }
+  100% { transform: translateX(0); }
 }
 .look-card {
   min-width: 260px;
@@ -540,4 +556,68 @@ footer {
     aspect-ratio: 3 / 4;
     height: auto;
   }
+}
+
+/* --- AJOUTS & CORRECTIONS EFFECTUÉS --- */
+.assiri-carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.assiri-slide {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+}
+.assiri-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
+}
+.assiri-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.assiri-carousel-controls {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 5px 15px;
+    border-radius: 20px;
+    z-index: 10;
+}
+.assiri-carousel-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+.adire-gallery {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100%;
+    height: 100%;
+    scrollbar-width: none;
+}
+.adire-gallery::-webkit-scrollbar {
+    display: none;
+}
+.adire-gallery img {
+    flex: 0 0 100%;
+    height: 100%;
+    object-fit: contain;
+    scroll-snap-align: center;
 }
