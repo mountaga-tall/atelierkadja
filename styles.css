@@ -64,14 +64,8 @@ body {
   animation: pulse 1.5s infinite alternate;
 }
 @keyframes pulse {
-  0% {
-    transform: scaleX(0.3);
-    opacity: 0.4;
-  }
-  100% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
+  0% { transform: scaleX(0.3); opacity: 0.4; }
+  100% { transform: scaleX(1); opacity: 1; }
 }
 header {
   position: fixed;
@@ -95,13 +89,13 @@ header {
 }
 nav {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   flex-wrap: wrap;
 }
 nav a {
   color: #ffffff;
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: var(--transition-smooth);
@@ -240,16 +234,9 @@ section {
 .carousel-track:hover {
   animation-play-state: paused;
 }
-.reverse-track {
-  animation: scroll-reverse 25s linear infinite;
-}
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(calc(-50% - 10px)); }
-}
-@keyframes scroll-reverse {
-  0% { transform: translateX(calc(-50% - 10px)); }
-  100% { transform: translateX(0); }
 }
 .look-card {
   min-width: 260px;
@@ -366,54 +353,6 @@ section {
   background: var(--accent-color);
   color: var(--primary-color);
 }
-#robes-volantes .card-image {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  height: auto;
-  position: relative;
-  overflow: hidden;
-  background-color: #f8f8f8;
-}
-#robes-volantes .card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-#robes-volantes .product-views {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-#robes-volantes .tshirt-slider {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-#robes-volantes .tshirt-slide {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-#robes-volantes .tshirt-slide.active {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  z-index: 2;
-}
-#robes-volantes .tshirt-slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
 .intro {
   background: var(--primary-color);
   color: #ffffff;
@@ -444,16 +383,6 @@ section {
   font-family: var(--font-heading);
   font-size: 2.2rem;
   margin: 10px 0 20px;
-}
-.quote {
-  text-align: center;
-  background: #ffffff;
-}
-.quote blockquote {
-  font-family: var(--font-heading);
-  font-size: 2rem;
-  font-style: italic;
-  margin-bottom: 10px;
 }
 .contact-container {
   display: flex;
@@ -534,6 +463,51 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+.assiri-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.assiri-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
+}
+.assiri-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+.assiri-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.assiri-carousel-controls {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px 15px;
+  border-radius: 20px;
+  z-index: 10;
+}
+.assiri-carousel-controls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--primary-color);
+}
 @media (max-width: 768px) {
   header {
     flex-direction: column;
@@ -541,7 +515,7 @@ footer {
   }
   nav {
     justify-content: center;
-    gap: 12px;
+    gap: 10px;
   }
   .hero-content h1 {
     font-size: 2.2rem;
@@ -549,75 +523,4 @@ footer {
   .maison-container {
     grid-template-columns: 1fr;
   }
-  .card-image {
-    height: 350px;
-  }
-  #robes-volantes .card-image {
-    aspect-ratio: 3 / 4;
-    height: auto;
-  }
-}
-
-/* --- AJOUTS & CORRECTIONS EFFECTUÉS --- */
-.assiri-carousel {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-.assiri-slide {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.5s ease;
-}
-.assiri-slide.active {
-    opacity: 1;
-    visibility: visible;
-    z-index: 2;
-}
-.assiri-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-.assiri-carousel-controls {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 5px 15px;
-    border-radius: 20px;
-    z-index: 10;
-}
-.assiri-carousel-controls button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
-    color: var(--primary-color);
-}
-.adire-gallery {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    width: 100%;
-    height: 100%;
-    scrollbar-width: none;
-}
-.adire-gallery::-webkit-scrollbar {
-    display: none;
-}
-.adire-gallery img {
-    flex: 0 0 100%;
-    height: 100%;
-    object-fit: contain;
-    scroll-snap-align: center;
 }
