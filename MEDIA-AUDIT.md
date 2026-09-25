@@ -94,7 +94,7 @@ L’archive fournie ne contient pas les photographies/vidéos du catalogue dans 
 
 Références vérifiées via le dépôt public fourni :
 - Assiri : `assiri1.jpeg`, `assiri2.jpeg`.
-- Robes longues : `robelong1.jpeg`, `robelong1b.jpeg`, `robelong2.jpeg` à `robelong6.jpeg`.
+- Robes longues : 7 produits séparés utilisant `robelong1.jpeg`, `robelong1b.jpeg`, `robelong2.jpeg` à `robelong6.jpeg`.
 - Sawa : `enspantr1.JPG`, `enspantr1a.JPG`, `enspantr2.PNG`, `enspantv1.JPG`.
 - Maillots : `maillot1.jpeg`, `maillot2.jpeg`, `maillot3.jpeg`.
 

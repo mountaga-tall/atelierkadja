@@ -60,7 +60,7 @@ Cette archive est prête à être déposée dans un nouveau dépôt GitHub. Le c
 
 ## Mise à jour v7 — chemins médias
 - Assiri utilise désormais `assiri1.jpeg` et `assiri2.jpeg` depuis `images/ENSEMBLES/Pantalons/Assiri/`.
-- Robes longues utilise `robelong1.jpeg`, `robelong1b.jpeg`, puis `robelong2.jpeg` à `robelong6.jpeg`.
+- Robes longues présente 7 produits séparés : `robelong1.jpeg`, `robelong1b.jpeg`, puis `robelong2.jpeg` à `robelong6.jpeg`.
 - L’ensemble Sawa est renseigné à 40 000 FCFA avec sa description commerciale.
 - Les 3 maillots ont désormais leurs noms, prix et descriptions.
 - Les nouvelles références médias pointent vers les fichiers publics du dépôt GitHub afin d’éviter les 404 du package qui ne contenait pas les photos.
