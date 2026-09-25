@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Remplacer SITE_BASE_URL par le domaine public avant mise en production. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://SITE_BASE_URL/index.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/nouveautes.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/chemises-tee-shirts-tops.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/tee-shirts.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/tops.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/robes.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/robes-volantes.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/lewa.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/fatila.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/robes-longues.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/ensembles.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/adire.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/assiri.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/anena.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/sawa-set.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/caftans.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/caftans-atypiques.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/caftans-brodes.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/pantalons.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/maillots-de-bain.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/sur-mesure.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/la-maison.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/contact.html</loc></url>
+  <url><loc>https://SITE_BASE_URL/coming-soon.html</loc></url>
+</urlset>
