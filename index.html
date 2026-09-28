@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#111111"/>
+  <meta name="mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Atelier Kadja"/>
+  <link href="manifest.json" rel="manifest"/>
+  <link href="icons/icon-192.png" rel="apple-touch-icon"/>
+  <link href="icons/icon-192.png" rel="icon"/>
+  <link href="styles.css?v=20260928-kadja-v10" rel="stylesheet"/>
+  <title>ATELIER KADJA | Catalogue</title>
+  <meta name="description" content="Catalogue digital Atelier Kadja — Maison de Mode Ivoirienne à Abidjan."/>
+</head>
+
+<body data-page="index">
+
+  <!-- INTRO / LOADER -->
+  <div class="site-loader" data-site-loader aria-hidden="true">
+    <div class="site-loader-inner">
+      <div class="site-loader-mark" aria-hidden="true">
+        <img src="icons/kadja-mark.png" alt="" width="54" height="54">
+      </div>
+      <div class="site-loader-wordmark">ATELIER KADJA</div>
+      <div class="site-loader-line"><span></span></div>
+      <div class="site-loader-caption">Maison de Mode Ivoirienne · Abidjan</div>
+    </div>
+  </div>
+
+  <!-- HEADER DESKTOP / TOP MOBILE -->
+  <header class="site-header" data-header>
+    <div class="container nav">
+
+      <a class="brand" href="index.html" aria-label="ATELIER KADJA — Accueil">
+        <span class="brand-mark">
+          <img src="icons/kadja-mark.png" alt="" width="44" height="44">
+        </span>
+        <span class="brand-wordmark">ATELIER KADJA</span>
+      </a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-controls="site-menu"
+        aria-expanded="false"
+        aria-label="Ouvrir le menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-menu" id="site-menu" aria-label="Navigation principale">
+
+        <div class="site-search-wrap" data-site-search-wrap>
+          <form class="site-search-form" data-site-search-form role="search">
+            <label class="sr-only" for="site-search-input">Rechercher sur tout le site</label>
+            <span class="site-search-icon" aria-hidden="true">⌕</span>
+            <input
+              id="site-search-input"
+              data-site-search-input
+              type="search"
+              autocomplete="off"
+              placeholder="Rechercher sur le site…">
+            <button type="submit" aria-label="Rechercher">↵</button>
+          </form>
+          <div class="site-search-results" data-site-search-results hidden></div>
+        </div>
+
+        <div class="nav-primary">
+          <a href="index.html">Accueil</a>
+          <a href="nouveautes.html">Nouveautés</a>
+
+          <details class="nav-collection-menu">
+            <summary>
+              Collections
+              <span class="summary-plus">+</span>
+            </summary>
+
+            <div class="mega-menu">
+
+              <div class="mega-group">
+                <a class="mega-group-title" href="chemises-tee-shirts-tops.html">Chemises, Tops & tee-shirt</a>
+                <a href="tee-shirts.html">Tee-shirts</a>
+                <a href="tops.html">Tops</a>
+                <a href="coming-soon.html#chemises">Chemises <span class="menu-note">à venir</span></a>
+              </div>
+
+              <div class="mega-group">
+                <a class="mega-group-title" href="robes.html">Robes</a>
+                <a href="robes-volantes.html">Robes volantes</a>
+                <a href="robes-longues.html">Robes longues</a>
+                <a href="coming-soon.html#robes-midi">Robes midi <span class="menu-note">à venir</span></a>
+                <a href="coming-soon.html#robes-courtes">Robes courtes <span class="menu-note">à venir</span></a>
+              </div>
+
+              <div class="mega-group">
+                <a class="mega-group-title" href="ensembles.html">Ensembles</a>
+                <a href="adire.html">Adiré</a>
+                <a href="assiri.html">Assiri</a>
+                <a href="anena.html">Anéna</a>
+                <a href="sawa-set.html">Sawa set</a>
+              </div>
+
+              <div class="mega-group">
+                <a class="mega-group-title" href="caftans.html">Caftans</a>
+                <a href="caftans-atypiques.html">Caftans atypiques</a>
+                <a href="caftans-brodes.html">Caftans brodés</a>
+                <a href="coming-soon.html#caftans-simples">Caftans simples <span class="menu-note">à venir</span></a>
+              </div>
+
+              <div class="mega-group">
+                <a class="mega-group-title" href="pantalons.html">Pantalons</a>
+                <a href="maillots-de-bain.html">Maillots de bain</a>
+                <a href="coming-soon.html#jupes">Jupes <span class="menu-note">à venir</span></a>
+                <a href="coming-soon.html#blazers">Blazers <span class="menu-note">à venir</span></a>
+              </div>
+
+              <div class="mega-group">
+                <a class="mega-group-title" href="coming-soon.html#maroquinerie">Maroquinerie</a>
+                <a href="coming-soon.html#sacs">Sacs</a>
+                <a href="coming-soon.html#ceintures">Ceintures</a>
+                <a href="coming-soon.html#portefeuilles">Portefeuilles</a>
+                <a href="coming-soon.html#petite-maroquinerie">Petite maroquinerie</a>
+                <a href="coming-soon.html#accessoires">Accessoires</a>
+              </div>
+
+              <div class="mega-group mega-group-wide">
+                <a href="coming-soon.html#combinaisons">Combinaisons <span class="menu-note">à venir</span></a>
+                <a href="coming-soon.html#survetements">Survêtements <span class="menu-note">à venir</span></a>
+                <a class="mega-coming" href="coming-soon.html">Voir tout le Coming Soon ↗</a>
+              </div>
+
+              <a class="mega-family" href="ensembles.html">Explorer toutes les familles de collections ↗</a>
+            </div>
+          </details>
+
+          <a href="la-maison.html">La Maison</a>
+          <a href="sur-mesure.html">Sur mesure</a>
+          <a href="contact.html">Contact</a>
+        </div>
+
+        <a class="nav-order" data-whatsapp-general href="https://wa.me/2250759013832" rel="noopener" target="_blank">
+          <span>Commander</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!--
+      HOME EDITORIAL
+      Chaque visuel + texte vit dans le même <a>.
+      La zone entière est donc cliquable.
+    -->
+    <section class="editorial-home" aria-label="Univers Atelier Kadja">
+
+      <article class="editorial-slide" id="adire">
+        <a class="editorial-media" href="ensembles.html" aria-label="Découvrir les ensembles Atelier Kadja">
+          <img
+            src="images/ENSEMBLES/Pantalons/adire/nouv1.webp"
+            alt="Collection Adiré Atelier Kadja"
+            fetchpriority="high"
+            decoding="async">
+
+          <div class="editorial-shade"></div>
+
+          <div class="editorial-outline-word" aria-hidden="true">ATELIER</div>
+
+          <div class="editorial-copy">
+            <span class="editorial-kicker">01 · Nouveauté</span>
+            <h1>ADIRÉ</h1>
+            <p>Ensembles pantalon + chemise</p>
+            <span class="editorial-link">Découvrir ↗</span>
+          </div>
+
+          <span class="editorial-corner">01 / 04</span>
+        </a>
+      </article>
+
+      <article class="editorial-slide" id="robes">
+        <a class="editorial-media" href="robes.html" aria-label="Découvrir les robes Atelier Kadja">
+          <img
+            src="images/ROBES/Robes longues/robelong1.webp"
+            alt="Robes Atelier Kadja"
+            loading="lazy"
+            decoding="async">
+
+          <div class="editorial-shade"></div>
+
+          <div class="editorial-outline-word" aria-hidden="true">KADJA</div>
+
+          <div class="editorial-copy editorial-copy-light">
+            <span class="editorial-kicker">02 · Silhouettes</span>
+            <h2>ROBES</h2>
+            <p>Robes volantes et robes longues</p>
+            <span class="editorial-link">Découvrir ↗</span>
+          </div>
+
+          <span class="editorial-corner">02 / 04</span>
+        </a>
+      </article>
+
+      <article class="editorial-slide editorial-slide-dark" id="caftans">
+        <a class="editorial-media" href="caftans.html" aria-label="Découvrir les caftans Atelier Kadja">
+          <img
+            src="images/CAFTANS/Caftans-atypiques/caftanatyp1.webp"
+            alt="Caftans Atelier Kadja"
+            loading="lazy"
+            decoding="async">
+
+          <div class="editorial-shade"></div>
+
+          <div class="editorial-outline-word" aria-hidden="true">KADJA</div>
+
+          <div class="editorial-copy">
+            <span class="editorial-kicker">03 · Signature</span>
+            <h2>CAFTANS</h2>
+            <p>Des silhouettes conçues comme des pièces fortes</p>
+            <span class="editorial-link">Découvrir ↗</span>
+          </div>
+
+          <span class="editorial-corner">03 / 04</span>
+        </a>
+      </article>
+
+      <article class="editorial-slide editorial-slide-video" id="nouveautes">
+        <a class="editorial-media" href="nouveautes.html" aria-label="Découvrir les nouveautés Atelier Kadja">
+          <video
+            class="editorial-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            webkit-playsinline
+            preload="metadata"
+            poster="images/CHEMISES, TEE-SHIRTS &amp; TOPS/herot1.webp"
+            data-autoplay>
+            <source src="images/NOUVEAUTES/Newcoll2.mp4" type="video/mp4" media="(max-width: 640px)">
+            <source src="images/NOUVEAUTES/Newcoll1.mp4" type="video/mp4">
+          </video>
+
+          <div class="editorial-shade editorial-shade-video"></div>
+
+          <div class="editorial-outline-word" aria-hidden="true">ATELIER</div>
+
+          <div class="editorial-copy editorial-copy-light">
+            <span class="editorial-kicker">04 · La maison</span>
+            <h2>NOUVEAUTÉS</h2>
+            <p>Les dernières silhouettes de la maison</p>
+            <span class="editorial-link">Voir les nouveautés ↗</span>
+          </div>
+
+          <span class="editorial-corner">04 / 04</span>
+        </a>
+      </article>
+
+      <!-- Index desktop -->
+      <nav class="editorial-index" aria-label="Navigation des univers">
+        <a href="#adire" class="is-active">Adiré</a>
+        <a href="#robes">Robes</a>
+        <a href="#caftans">Caftans</a>
+        <a href="#nouveautes">Nouveautés</a>
+      </nav>
+
+      <!-- Signature verticale / repère éditorial -->
+      <div class="editorial-signature" aria-hidden="true">
+        <span>ATELIER KADJA</span>
+        <i></i>
+        <span>ABIDJAN</span>
+      </div>
+    </section>
+
+    <!-- INTRO COURTE -->
+    <section class="section intro-section editorial-intro">
+      <div class="container narrow">
+        <span class="kicker muted-kicker">Le vestiaire Kadja</span>
+        <h2 class="section-title">Des pièces pensées comme des chapitres.</h2>
+        <p class="section-subtitle">
+          Une maison de mode ivoirienne qui compose des silhouettes contemporaines,
+          entre matières, coupes, imprimés et présence.
+        </p>
+      </div>
+    </section>
+
+    <!-- COLLECTIONS COMPACTES -->
+    <section class="section editorial-collections">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker muted-kicker">Collections disponibles</span>
+            <h2 class="section-title">Explorer les univers</h2>
+          </div>
+          <a class="text-link editorial-all-link" href="ensembles.html">Tout voir ↗</a>
+        </div>
+
+        <div class="editorial-quick-grid">
+
+          <a class="editorial-quick-card" href="ensembles.html">
+            <img
+              src="images/ENSEMBLES/Pantalons/adire/nouv1.webp"
+              alt="Ensembles"
+              loading="lazy"
+              decoding="async">
+            <span class="editorial-quick-shade"></span>
+            <span class="editorial-quick-copy">
+              <small>01</small>
+              <strong>Ensembles</strong>
+              <em>Explorer ↗</em>
+            </span>
+          </a>
+
+          <a class="editorial-quick-card" href="chemises-tee-shirts-tops.html">
+            <img
+              src="images/CHEMISES, TEE-SHIRTS &amp; TOPS/Tee-shirts/t1r.webp"
+              alt="Chemises, Tops & tee-shirt"
+              loading="lazy"
+              decoding="async">
+            <span class="editorial-quick-shade"></span>
+            <span class="editorial-quick-copy">
+              <small>02</small>
+              <strong>Pièces essentielles</strong>
+              <em>Explorer ↗</em>
+            </span>
+          </a>
+
+          <a class="editorial-quick-card" href="robes.html">
+            <img
+              src="images/ROBES/Robes longues/robelong1.webp"
+              alt="Robes"
+              loading="lazy"
+              decoding="async">
+            <span class="editorial-quick-shade"></span>
+            <span class="editorial-quick-copy">
+              <small>03</small>
+              <strong>Robes</strong>
+              <em>Explorer ↗</em>
+            </span>
+          </a>
+
+          <a class="editorial-quick-card" href="caftans.html">
+            <img
+              src="images/CAFTANS/Caftans-atypiques/caftanatyp1.webp"
+              alt="Caftans"
+              loading="lazy"
+              decoding="async">
+            <span class="editorial-quick-shade"></span>
+            <span class="editorial-quick-copy">
+              <small>04</small>
+              <strong>Caftans</strong>
+              <em>Explorer ↗</em>
+            </span>
+          </a>
+
+          <a class="editorial-quick-card" href="maillots-de-bain.html">
+            <img
+              src="images/MAILLOTS DE BAIN/maillot1.webp"
+              alt="Maillots de bain"
+              loading="lazy"
+              decoding="async">
+            <span class="editorial-quick-shade"></span>
+            <span class="editorial-quick-copy">
+              <small>05</small>
+              <strong>Maillots de bain</strong>
+              <em>Explorer ↗</em>
+            </span>
+          </a>
+
+          <a class="editorial-quick-card editorial-quick-card-video" href="nouveautes.html">
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              webkit-playsinline
+              preload="metadata"
+              poster="images/CHEMISES, TEE-SHIRTS &amp; TOPS/herot1.webp"
+              data-autoplay>
+              <source src="images/NOUVEAUTES/Newcoll2.mp4" type="video/mp4" media="(max-width: 640px)">
+            <source src="images/NOUVEAUTES/Newcoll1.mp4" type="video/mp4">
+            </video>
+            <span class="editorial-quick-shade"></span>
+            <span class="editorial-quick-copy">
+              <small>06</small>
+              <strong>Nouveautés</strong>
+              <em>Explorer ↗</em>
+            </span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- A VENIR -->
+    <section class="section section-compact editorial-coming">
+      <div class="container">
+        <div class="editorial-coming-inner">
+          <div>
+            <span class="kicker muted-kicker">À venir</span>
+            <h2 class="section-title small-title">Les prochaines lignes de la maison.</h2>
+            <p class="section-subtitle">
+              Chemises, robes midi et courtes, caftans simples, maroquinerie,
+              accessoires et autres pièces en préparation.
+            </p>
+          </div>
+          <a class="text-link" href="coming-soon.html">Voir le Coming Soon ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAISON -->
+    <section class="section editorial-house">
+      <div class="container">
+        <div class="editorial-house-grid">
+          <div>
+            <span class="kicker muted-kicker">La Maison</span>
+            <h2 class="section-title small-title">Une création, une histoire, un échange.</h2>
+            <p class="section-subtitle">
+              Découvrir l'univers Atelier Kadja, le service sur mesure ou demander une information.
+            </p>
+          </div>
+
+          <div class="explore-links">
+            <a href="la-maison.html">La Maison <span>↗</span></a>
+            <a href="sur-mesure.html">Sur mesure <span>↗</span></a>
+            <a href="contact.html">Contact <span>↗</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-top">
+
+      <div class="footer-brand-block">
+        <a class="footer-brand" href="index.html">ATELIER KADJA</a>
+        <p>Maison de Mode Ivoirienne · Abidjan</p>
+        <p class="footer-muted">L'élégance contemporaine imaginée à Abidjan.</p>
+
+        <a
+          class="footer-wa-line"
+          href="https://wa.me/2250759013832"
+          rel="noopener"
+          target="_blank">
+          <span class="wa-mini" aria-hidden="true">W</span>
+          +225 07 59 01 38 32
+        </a>
+      </div>
+
+      <div>
+        <div class="footer-heading">Explorer</div>
+        <div class="footer-links">
+          <a href="index.html">Accueil</a>
+          <a href="nouveautes.html">Nouveautés</a>
+          <a href="la-maison.html">La Maison</a>
+          <a href="sur-mesure.html">Sur mesure</a>
+          <a href="contact.html">Contact</a>
+          <a href="sitemap.html">Plan du site</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-heading">Collections</div>
+        <div class="footer-links footer-columns">
+          <a href="chemises-tee-shirts-tops.html">Chemises, Tops & tee-shirt</a>
+          <a href="robes.html">Robes</a>
+          <a href="ensembles.html">Ensembles</a>
+          <a href="caftans.html">Caftans</a>
+          <a href="pantalons.html">Pantalons</a>
+          <a href="maillots-de-bain.html">Maillots de bain</a>
+          <a href="coming-soon.html">Tout le Coming Soon</a>
+        </div>
+      </div>
+
+      <div class="footer-social-col">
+        <div class="footer-heading">Suivre la maison</div>
+
+        <div class="social-icons" aria-label="Réseaux sociaux">
+
+          <a
+            class="social-icon"
+            href="https://www.instagram.com/latelierkadja/"
+            rel="noopener"
+            target="_blank"
+            aria-label="Instagram Atelier Kadja"
+            title="Instagram">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <rect height="18" rx="5" width="18" x="3" y="3"></rect>
+              <circle cx="12" cy="12" r="4.1"></circle>
+              <circle class="fill" cx="17.5" cy="6.8" r="1.05"></circle>
+            </svg>
+          </a>
+
+          <a
+            class="social-icon"
+            href="https://www.tiktok.com/@latelierkadja"
+            rel="noopener"
+            target="_blank"
+            aria-label="TikTok Atelier Kadja"
+            title="TikTok">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M14 3v11.1a4.3 4.3 0 1 1-3.7-4.25v3.4a1 1 0 1 0 .3 1.95c.75 0 1.35-.6 1.35-1.35V3H14z"></path>
+              <path class="fill" d="M14 3c.25 2.15 1.55 3.6 3.7 4.05v2.3A7 7 0 0 1 14 8.2V3z"></path>
+            </svg>
+          </a>
+
+          <a
+            class="social-icon"
+            href="https://www.facebook.com/latelierkadja"
+            rel="noopener"
+            target="_blank"
+            aria-label="Facebook Atelier Kadja"
+            title="Facebook">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M13.4 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.6 1.65-1.6h1.8V3.8c-.32-.04-1.42-.13-2.63-.13-2.6 0-4.37 1.58-4.37 4.5V10H7v3h2.85v8h3.55z"></path>
+            </svg>
+          </a>
+
+        </div>
+
+        <a class="footer-email" href="mailto:latelierkadja@outlook.fr">
+          latelierkadja@outlook.fr ↗
+        </a>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <span>© <span data-year></span> ATELIER KADJA</span>
+      <span>Cocody Angré 8e Tranche — Abidjan</span>
+      <span>Catalogue digital</span>
+    </div>
+  </footer>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-bottom-nav" aria-label="Navigation mobile">
+    <a href="index.html">
+      <span aria-hidden="true">⌂</span>
+      <em>Accueil</em>
+    </a>
+
+    <button class="mobile-menu-trigger" type="button" aria-label="Ouvrir le menu">
+      <span aria-hidden="true">☰</span>
+      <em>Menu</em>
+    </button>
+
+    <a href="sur-mesure.html">
+      <span aria-hidden="true">◌</span>
+      <em>Sur mesure</em>
+    </a>
+
+    <a href="contact.html">
+      <span aria-hidden="true">□</span>
+      <em>Contact</em>
+    </a>
+  </nav>
+
+  <!-- WHATSAPP -->
+  <a
+    class="whatsapp-float"
+    data-whatsapp-general
+    href="https://wa.me/2250759013832"
+    rel="noopener"
+    target="_blank"
+    aria-label="Contacter Atelier Kadja sur WhatsApp">
+    <span class="whatsapp-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24">
+        <path class="bubble" d="M20.4 11.6a8.4 8.4 0 0 1-12.2 7.5L4 20l.9-4A8.4 8.4 0 1 1 20.4 11.6Z"></path>
+        <path class="phone" d="M8.4 7.8c.3-.4.6-.4.9-.4h.5c.2 0 .4.1.5.4l.9 2.1c.1.3 0 .5-.2.7l-.7.8c.5 1 1.2 1.7 2.2 2.3l.8-.8c.2-.2.4-.3.7-.2l2.1.9c.3.1.4.3.4.6v.4c0 .3-.1.7-.4.9-.4.4-1 .7-1.6.7-3.1 0-6.2-3.1-6.2-6.2 0-.6.3-1.2.7-1.7Z"></path>
+      </svg>
+    </span>
+    <span class="whatsapp-label">WhatsApp</span>
+  </a>
+
+  <div class="site-progress" aria-hidden="true"><span></span></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <script defer src="script.js?v=20260928-kadja-v10"></script>
+
+  <script id="kadja-sw-registered">
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
