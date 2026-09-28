@@ -1,67 +1,95 @@
-# ATELIER KADJA — Catalogue v6
+# ATELIER KADJA — Catalogue éditorial
 
-Version refactorisée du catalogue multi-pages Atelier Kadja.
+Version corrigée du site multi-pages Atelier Kadja, pensée pour un rendu éditorial mode sur ordinateur et mobile.
 
-## Ce qui a été corrigé
+## Architecture
 
-### Navigation et structure
-- `Chemises, Tops & Détails` a été remplacé partout par **`Chemises, Tops & tee-shirt`**.
-- Les rubriques **Coming Soon** sont regroupées sur une seule page : `coming-soon.html`.
-- Les liens Coming Soon utilisent des ancres (`#chemises`, `#robes-midi`, etc.) au lieu de multiplier les pages.
-- `Sur mesure` reste une page disponible et n'est plus présenté comme “Coming Soon”.
-- Ajout de la sous-page `robes-longues.html`.
-- Les pages catégories (`ensembles.html`, `caftans.html`, `robes.html`, `pantalons.html`, `chemises-tee-shirts-tops.html`) ne recopient plus les fiches produits.
+Le dépôt contient 25 pages HTML, un `styles.css`, un `script.js`, un manifeste PWA et un service worker.
 
-### Produits et galeries
-- Les fiches `Adiré`, `Tee-shirts`, `Assiri`, `Anéna`, `Sawa set`, `Lewa`, `Fatila`, `Caftans atypiques`, `Caftans brodés` et `Robes longues` conservent toutes leurs photos dans leur galerie respective.
-- Une seule photo de couverture est chargée dans chaque carte produit.
-- Les autres vues sont stockées en `data-gallery-src` et chargées uniquement quand la galerie est ouverte.
-- Les carrousels automatiques de cartes produits ont été supprimés afin d'éviter les répétitions visuelles et les effets de déplacement inutiles.
-- Les doublons de fiches produits entre pages ont été supprimés : chaque fiche produit n'apparaît plus qu'une fois dans une page produit dédiée.
+L'accueil utilise une présentation éditoriale plein écran : chaque visuel et son texte vivent dans la même zone cliquable. Les pages de collections conservent leurs galeries, leurs fiches et leurs rails horizontaux lorsqu'ils sont prévus.
 
-### JavaScript / PWA
-- Correction de la détection `prefers-reduced-motion`.
-- La lightbox lit désormais les galeries complètes sans afficher plusieurs photos dans la carte.
-- Le service worker a été durci : il ne renvoie plus `index.html` en guise de fallback pour une image/vidéo manquante.
-- Le cache PWA a été versionné en `atelier-kadja-v6`.
-- `manifest.json` ne référence plus le logo JPEG absent ; il utilise les icônes réellement présentes dans `icons/`.
+### Ordre de navigation principal
 
-### Vérifications
-- **25 pages HTML** sont présentes.
-- **0 lien local HTML cassé** détecté.
-- Les cartes produits contrôlées ont **1 seule image visible**.
-- **0 référence `photo-carousel`** restante dans le JavaScript/CSS final.
-- Un script `scripts/check-site.py` permet de refaire l'audit des liens et médias.
+- Accueil
+- Nouveautés
+- Collections
+- La Maison
+- Sur mesure
+- Contact
 
-## Médias de l'archive
+Les rubriques à venir sont regroupées dans `coming-soon.html` avec leurs ancres.
 
-Point important : l'archive fournie ne contient pas les photographies/vidéos du catalogue dans `images/`. Les dossiers sont présents, mais les fichiers médias référencés par le HTML ne sont pas inclus dans le ZIP.
+## Correctifs appliqués
 
-Le rapport complet est dans `MEDIA-AUDIT.md`. Les chemins existants dans le code ont été conservés et contrôlés sans inventer de nouveaux fichiers. Il faudra remettre les médias réels dans `images/` avant publication.
+### Accueil desktop / mobile
 
-## GitHub / nom du dépôt
+- Header de l'accueil placé en surimpression des visuels.
+- Sections éditoriales en `100svh` pour que la photographie occupe réellement l'écran.
+- Toute la zone image + texte est cliquable.
+- Texte positionné dans le même conteneur que le média afin de rester ancré au visuel.
+- Mobile avec navigation fixe en bas de l'écran.
+- Repère/logo graphique en contour sur les visuels mobile.
 
-L'archive fournie ne contient pas de dossier `.git`, de remote Git ni de nom de dépôt GitHub exploitable. Cette version utilise donc des liens locaux/relatifs et ne dépend pas du nom du dépôt.
+### Galeries produits
 
-Le domaine public n'a pas été inventé : `sitemap.xml` contient le marqueur `SITE_BASE_URL` à remplacer par le vrai domaine avant mise en production. `robots.txt` ne contient pas de fausse URL de sitemap.
+- Les galeries complètes restent stockées dans `data-gallery-src`.
+- Une seule image est affichée dans la carte à la fois.
+- La couverture passe automatiquement à la vue suivante lorsque plusieurs vues existent.
+- Le changement s'arrête au survol, au focus et temporairement après une interaction tactile.
+- Un clic sur la couverture ouvre la vraie galerie à la vue actuellement affichée.
+- `prefers-reduced-motion` désactive l'automatisme.
 
-## Lancer un contrôle
+### Médias et chemins
+
+- Correction du dossier vidéo des nouveautés : `images/NOUVEAUTES/`.
+- Correction du fichier Anéna : `images/ENSEMBLES/Pantalons/Anena/img_5044.jpg.webp`.
+- Suppression des URL `raw.githubusercontent.com` pour les médias qui sont maintenant présents localement dans le dépôt.
+- Les fichiers médias réellement présents dans l'archive sont utilisés avec des chemins relatifs au dépôt.
+
+### PWA / cache
+
+- `icons/icon-192.png` est réellement en 192×192.
+- `icons/icon-512.png` est réellement en 512×512.
+- `icons/kadja-mark.png` sert de marque transparente pour les interfaces où un fond clair/sombre est géré par CSS.
+- Cache du service worker versionné en `atelier-kadja-v9`.
+- Le service worker ne transforme pas une ressource média absente en `index.html`.
+
+### SEO / publication
+
+- `CNAME` : `atelierkadja.com`.
+- `robots.txt` référence `https://atelierkadja.com/sitemap.xml`.
+- `sitemap.xml` utilise `https://atelierkadja.com/`.
+- Les liens internes restent relatifs et ne dépendent pas du nom du dépôt GitHub.
+
+## Vérification
+
+Le script d'audit contrôle les pages HTML, les liens locaux, les médias locaux et les anciennes URL GitHub :
 
 ```bash
 python3 scripts/check-site.py
 ```
 
-Le contrôle signale les médias absents sans considérer leur absence comme un lien HTML cassé. Il peut donc être utilisé dès maintenant, puis relancé après avoir remis les vrais fichiers dans `images/`.
+État attendu de la version corrigée :
 
-## Publication GitHub Pages
+```text
+HTML pages: 25
+Broken local HTML links: 0
+Missing local media/assets: 0
+Remaining raw GitHub media URLs: 0
+```
 
-Cette archive est prête à être déposée dans un nouveau dépôt GitHub. Le changement de nom du dépôt n'impose pas de modification des liens internes, puisqu'ils sont relatifs.
+Le contrôle JavaScript peut aussi être effectué avec :
 
+```bash
+node --check script.js
+```
 
-## Mise à jour v7 — chemins médias
-- Assiri utilise désormais `assiri1.jpeg` et `assiri2.jpeg` depuis `images/ENSEMBLES/Pantalons/Assiri/`.
-- Robes longues présente 7 produits séparés : `robelong1.jpeg`, `robelong1b.jpeg`, puis `robelong2.jpeg` à `robelong6.jpeg`.
-- L’ensemble Sawa est renseigné à 40 000 FCFA avec sa description commerciale.
-- Les 3 maillots ont désormais leurs noms, prix et descriptions.
-- Les nouvelles références médias pointent vers les fichiers publics du dépôt GitHub afin d’éviter les 404 du package qui ne contenait pas les photos.
-- L’icône d’installation n’affiche plus de texte « AK » en dur : elle utilise `icons/icon-192.png`. Le vrai fichier logo doit encore remplacer ces icônes.
+## Déploiement GitHub Pages
+
+Le dépôt peut être publié avec GitHub Pages. Les chemins étant relatifs, le site reste compatible avec un dépôt dont le nom change.
+
+Le domaine personnalisé est déjà indiqué par `CNAME`.
+
+## Médias présents dans cette archive
+
+Les photographies et vidéos référencées par les pages sont incluses dans cette archive corrigée. Les fichiers sont conservés dans leurs dossiers de travail et ne sont pas remplacés par des images inventées.

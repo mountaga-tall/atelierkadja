@@ -9,8 +9,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Atelier Kadja"/>
   <link href="manifest.json" rel="manifest"/>
-  <link href="images/heromob.mp4" rel="preload" as="video" media="(max-width: 640px)" type="video/mp4"/>
-  <link href="images/hero.mp4" rel="preload" as="video" media="(min-width: 641px)" type="video/mp4"/>
   <link href="icons/icon-192.png" rel="apple-touch-icon"/>
   <link href="icons/icon-192.png" rel="icon"/>
   <link href="styles.css?v=20260928-kadja-editorial" rel="stylesheet"/>
@@ -24,7 +22,7 @@
   <div class="site-loader" data-site-loader aria-hidden="true">
     <div class="site-loader-inner">
       <div class="site-loader-mark" aria-hidden="true">
-        <img src="icons/icon-192.png" alt="" width="54" height="54">
+        <img src="icons/kadja-mark.png" alt="" width="54" height="54">
       </div>
       <div class="site-loader-wordmark">ATELIER KADJA</div>
       <div class="site-loader-line"><span></span></div>
@@ -38,7 +36,7 @@
 
       <a class="brand" href="index.html" aria-label="ATELIER KADJA — Accueil">
         <span class="brand-mark">
-          <img src="icons/icon-192.png" alt="" width="44" height="44">
+          <img src="icons/kadja-mark.png" alt="" width="44" height="44">
         </span>
         <span class="brand-wordmark">ATELIER KADJA</span>
       </a>
@@ -84,7 +82,7 @@
             <div class="mega-menu">
 
               <div class="mega-group">
-                <a class="mega-group-title" href="chemises-tee-shirts-tops.html">Chemises, Tops &amp; tee-shirt</a>
+                <a class="mega-group-title" href="chemises-tee-shirts-tops.html">Chemises, Tops & tee-shirt</a>
                 <a href="tee-shirts.html">Tee-shirts</a>
                 <a href="tops.html">Tops</a>
                 <a href="coming-soon.html#chemises">Chemises <span class="menu-note">à venir</span></a>
@@ -240,9 +238,10 @@
             loop
             playsinline
             preload="metadata"
-            poster="images/CHEMISES, TEE-SHIRTS & TOPS/herot1.webp"
+            poster="images/CHEMISES, TEE-SHIRTS &amp; TOPS/herot1.webp"
             data-autoplay>
-            <source src="images/NOUVEAUTÉS/newcoll1.mp4" type="video/mp4">
+            <source src="images/NOUVEAUTES/Newcoll2.mp4" type="video/mp4" media="(max-width: 640px)">
+            <source src="images/NOUVEAUTES/Newcoll1.mp4" type="video/mp4">
           </video>
 
           <div class="editorial-shade editorial-shade-video"></div>
@@ -317,7 +316,7 @@
 
           <a class="editorial-quick-card" href="chemises-tee-shirts-tops.html">
             <img
-              src="images/CHEMISES, TEE-SHIRTS & TOPS/Tee-shirts/t1r.webp"
+              src="images/CHEMISES, TEE-SHIRTS &amp; TOPS/Tee-shirts/t1r.webp"
               alt="Chemises, Tops & tee-shirt"
               loading="lazy"
               decoding="async">
@@ -359,7 +358,7 @@
 
           <a class="editorial-quick-card" href="maillots-de-bain.html">
             <img
-              src="https://raw.githubusercontent.com/mountaga-tall/atelierkadja/main/images/MAILLOTS%20DE%20BAIN/maillot1.webp"
+              src="images/MAILLOTS DE BAIN/maillot1.webp"
               alt="Maillots de bain"
               loading="lazy"
               decoding="async">
@@ -378,9 +377,10 @@
               loop
               playsinline
               preload="metadata"
-              poster="images/CHEMISES, TEE-SHIRTS & TOPS/herot1.webp"
+              poster="images/CHEMISES, TEE-SHIRTS &amp; TOPS/herot1.webp"
               data-autoplay>
-              <source src="images/NOUVEAUTÉS/newcoll1.mp4" type="video/mp4">
+              <source src="images/NOUVEAUTES/Newcoll2.mp4" type="video/mp4" media="(max-width: 640px)">
+            <source src="images/NOUVEAUTES/Newcoll1.mp4" type="video/mp4">
             </video>
             <span class="editorial-quick-shade"></span>
             <span class="editorial-quick-copy">
@@ -468,7 +468,7 @@
       <div>
         <div class="footer-heading">Collections</div>
         <div class="footer-links footer-columns">
-          <a href="chemises-tee-shirts-tops.html">Chemises, Tops &amp; tee-shirt</a>
+          <a href="chemises-tee-shirts-tops.html">Chemises, Tops & tee-shirt</a>
           <a href="robes.html">Robes</a>
           <a href="ensembles.html">Ensembles</a>
           <a href="caftans.html">Caftans</a>
@@ -580,7 +580,7 @@
   <div class="site-progress" aria-hidden="true"><span></span></div>
   <div class="cursor-glow" aria-hidden="true"></div>
 
-  <script defer src="script.js"></script>
+  <script defer src="script.js?v=20260928-kadja-v9"></script>
 
   <script id="kadja-sw-registered">
     if ("serviceWorker" in navigator) {
