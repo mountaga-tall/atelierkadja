@@ -3702,3 +3702,10 @@ body[data-page="index"] .editorial-outline-word{
   content-visibility:auto;
   contain-intrinsic-size:900px;
 }
+
+
+/* Hard guarantee: content photography is never crop-filled by CSS. */
+main img{
+  object-fit:contain!important;
+  object-position:center!important;
+}
