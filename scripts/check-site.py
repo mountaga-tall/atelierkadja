@@ -72,6 +72,8 @@ bad_lang = []
 missing_alt = []
 duplicate_ids = []
 wrong_locale_links = []
+media_css_errors = []
+service_worker_errors = []
 
 for page in HTML:
     text = page.read_text(encoding="utf-8", errors="replace")
@@ -129,6 +131,21 @@ print(f"Bad/missing lang attributes: {len(bad_lang)}")
 print(f"Images without alt: {len(missing_alt)}")
 print(f"Duplicate IDs: {len(duplicate_ids)}")
 
+# CSS/media invariants: photos must never be crop-filled by the site CSS.
+css_path = ROOT / "styles.css"
+if css_path.exists():
+    css = css_path.read_text(encoding="utf-8", errors="replace")
+    if not re.search(r'main\s+img[^}]*object-fit\s*:\s*contain\s*!important', css, re.I | re.S):
+        media_css_errors.append("styles.css: missing global uncropped main img rule")
+    if re.search(r'\.editorial-quick-card\s+img[^}]*object-fit\s*:\s*cover', css, re.I | re.S):
+        media_css_errors.append("styles.css: editorial quick-card photos still use object-fit:cover")
+
+sw_path = ROOT / "sw.js"
+if sw_path.exists():
+    sw = sw_path.read_text(encoding="utf-8", errors="replace")
+    if "caches.match('./index.html')" in sw and "isDocumentRequest(request)" in sw:
+        service_worker_errors.append("sw.js: document offline fallback still points to index.html")
+
 for label, items in (
     ("BROKEN LINK", broken_links),
     ("MISSING MEDIA", missing_media),
@@ -137,11 +154,14 @@ for label, items in (
     ("LANG", bad_lang),
     ("ALT", missing_alt),
     ("DUPLICATE ID", duplicate_ids),
+    ("MEDIA CSS", media_css_errors),
+    ("SERVICE WORKER", service_worker_errors),
 ):
     for item in items:
         print(f"{label}: {item}")
 
 sys.exit(1 if (
     broken_links or missing_media or language_errors or
-    wrong_locale_links or bad_lang or missing_alt or duplicate_ids
+    wrong_locale_links or bad_lang or missing_alt or duplicate_ids or
+    media_css_errors or service_worker_errors
 ) else 0)
