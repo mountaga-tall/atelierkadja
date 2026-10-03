@@ -20,6 +20,8 @@
     'Rechercher sur le site…': 'Search the site…',
     'Accueil': 'Home',
     'Nouveautés': 'New arrivals',
+    'NOUVEAUTÉS': 'NEW ARRIVALS',
+    'Cocody Angré 8e Tranche — Abidjan': 'Cocody Angré 8th Tranche — Abidjan',
     'Chemises, Tops & tee-shirt': 'Shirts, Tops & T-shirts',
     'Tee-shirts': 'T-shirts',
     'Chemises': 'Shirts',
