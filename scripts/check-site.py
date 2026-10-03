@@ -5,7 +5,7 @@ from html import unescape
 import re, sys
 
 ROOT = Path(__file__).resolve().parents[1]
-HTML = sorted(ROOT.glob("*.html"))
+HTML = sorted(ROOT.rglob("*.html"))
 missing = []
 broken_html = []
 
