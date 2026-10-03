@@ -1,4 +1,4 @@
-const CACHE = 'atelier-kadja-v15';
+const CACHE = 'atelier-kadja-v16';
 
 const APP_SHELL = [
   "./", "./index.html", "./styles.css", "./script.js", "./manifest.json",
@@ -78,7 +78,7 @@ self.addEventListener('fetch', event => {
       }).catch(() => {
         // Never return HTML as a fallback for an image/video/other asset.
         return isDocumentRequest(request)
-          ? caches.match('./index.html')
+          ? caches.match('./404.html')
           : Response.error();
       });
     })
