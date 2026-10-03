@@ -4,8 +4,13 @@
   // FR / EN language switcher and lightweight static translation
   // ---------------------------------------------------------
 
-  const locale = location.pathname.split('/').filter(Boolean)[0] === 'en' ? 'en' : 'fr';
-  const currentFile = location.pathname.split('/').pop() || 'index.html';
+  const pathParts = location.pathname.split('/').filter(Boolean);
+  const locale = pathParts[0] === 'en' ? 'en' : 'fr';
+  const currentFile = (
+    pathParts[0] === 'en' || pathParts[0] === 'fr'
+      ? pathParts[1]
+      : pathParts[pathParts.length - 1]
+  ) || 'index.html';
 
   const localeTranslations = {
     'ATELIER KADJA | Catalogue': 'ATELIER KADJA | Catalog',
@@ -931,18 +936,31 @@
         return;
       }
 
-      const text = [
-        'Bonjour Atelier Kadja,',
-        '',
-        `Nom : ${name}`,
-        `Téléphone : ${phone}`,
-        `Objet : ${subject}`,
-        '',
-        'Message :',
-        message,
-        '',
-        'Je souhaite échanger avec la maison au sujet de ma demande.'
-      ].join('\n');
+      const text = locale === 'en'
+        ? [
+            'Hello Atelier Kadja,',
+            '',
+            'Name: ' + name,
+            'Phone: ' + phone,
+            'Subject: ' + subject,
+            '',
+            'Message:',
+            message,
+            '',
+            'I would like to discuss my request with the house.'
+          ].join('\\n')
+        : [
+            'Bonjour Atelier Kadja,',
+            '',
+            'Nom : ' + name,
+            'Téléphone : ' + phone,
+            'Objet : ' + subject,
+            '',
+            'Message :',
+            message,
+            '',
+            'Je souhaite échanger avec la maison au sujet de ma demande.'
+          ].join('\\n');
 
       const url =
         `https://wa.me/2250759013832?text=${encodeURIComponent(text)}`;
@@ -973,13 +991,13 @@
         class="lightbox-dialog"
         role="dialog"
         aria-modal="true"
-        aria-label="Galerie photo">
+        aria-label="${locale === 'en' ? 'Photo gallery' : 'Galerie photo'}">
 
         <button
           type="button"
           class="lightbox-close"
           data-lightbox-close
-          aria-label="Fermer">
+          aria-label="${locale === 'en' ? 'Close' : 'Fermer'}">
           ×
         </button>
 
@@ -987,7 +1005,7 @@
           type="button"
           class="lightbox-prev"
           data-lightbox-prev
-          aria-label="Photo précédente">
+          aria-label="${locale === 'en' ? 'Previous photo' : 'Photo précédente'}">
           ‹
         </button>
 
@@ -1000,7 +1018,7 @@
           type="button"
           class="lightbox-next"
           data-lightbox-next
-          aria-label="Photo suivante">
+          aria-label="${locale === 'en' ? 'Next photo' : 'Photo suivante'}">
           ›
         </button>
 
@@ -1116,7 +1134,7 @@
           `lightbox-thumb${i === lightboxIndex ? ' is-active' : ''}`;
         button.setAttribute(
           'aria-label',
-          `Afficher la photo ${i + 1}`
+          locale === 'en' ? `View photo ${i + 1}` : `Afficher la photo ${i + 1}`
         );
 
         const thumb = document.createElement('img');
@@ -1510,34 +1528,55 @@
 
     const found = SEARCH_INDEX
       .map(page => {
+        const translatedTitle = translateString(page.title);
+        const translatedDescription = translateString(page.description);
+        const translatedText = translateString(page.text);
         const hay = normalizeSearch(
-          `${page.title} ${page.description} ${page.text}`
+          page.title + ' ' + page.description + ' ' + page.text + ' ' +
+          translatedTitle + ' ' + translatedDescription + ' ' + translatedText
         );
+        const titleHay = normalizeSearch(page.title + ' ' + translatedTitle);
 
         const score = terms.reduce(
           (n, term) =>
             n +
             (hay.includes(term)
-              ? (normalizeSearch(page.title).includes(term) ? 4 : 1)
+              ? (titleHay.includes(term) ? 4 : 1)
               : 0),
           0
         );
 
-        return { ...page, score };
+        return {
+          ...page,
+          title: translatedTitle,
+          description: translatedDescription,
+          score
+        };
       })
       .filter(item => item.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 8);
 
     results.innerHTML = found.length
-      ? found.map(item => `
-          <a class="site-search-result" href="${item.url}">
-            <strong>${highlight(item.title)}</strong>
-            <span>${highlight(item.description || 'Voir la page')}</span>
-            <b>↗</b>
-          </a>
-        `).join('')
-      : '<div class="site-search-empty">Aucun résultat. Essayez un autre terme.</div>';
+      ? found.map(item => {
+          const target = '/' + locale + '/' + item.url.replace(/^\/+/, '');
+          return [
+            '<a class="site-search-result" href="',
+            target,
+            '">',
+            '<strong>',
+            highlight(item.title),
+            '</strong>',
+            '<span>',
+            highlight(item.description || translateString('Voir la page')),
+            '</span>',
+            '<b>↗</b>',
+            '</a>'
+          ].join('');
+        }).join('')
+      : '<div class="site-search-empty">' +
+        translateString('Aucun résultat. Essayez un autre terme.') +
+        '</div>';
 
     results.hidden = false;
   };
@@ -1636,7 +1675,7 @@
       <button
         type="button"
         class="app-install-close"
-        aria-label="Fermer">
+        aria-label="${locale === 'en' ? 'Close' : 'Fermer'}">
         ×
       </button>
     `;
