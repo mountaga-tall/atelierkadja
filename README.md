@@ -103,3 +103,15 @@ Les photographies et vidéos référencées par les pages sont incluses dans cet
 - Le JavaScript relance proprement la lecture après chargement du média et lors du retour dans la fenêtre.
 - Les écrans mobiles courts ne sont plus forcés à une hauteur minimale de 620 px pour les univers plein écran.
 - `hero.mp4` a été contrôlée : elle était en HEVC/H.265 et doit être réencodée en H.264 si elle est réutilisée sur des appareils anciens. La version web actuelle n’en dépend pas, mais le fichier a été réencodé en H.264 pour rester exploitable sur les appareils mobiles qui ne prennent pas en charge HEVC.
+
+
+## Versions FR / EN
+
+Le site dispose désormais de deux chemins de langue pour chaque page HTML :
+
+- `/fr/index.html`, `/fr/nouveautes.html`, etc. pour la version française.
+- `/en/index.html`, `/en/nouveautes.html`, etc. pour la version anglaise.
+
+Une pastille FR/EN est affichée sur l'ensemble du site. Elle conserve la page courante lorsque l'on change de langue. Le contenu historique reste accessible à la racine pour compatibilité avec les anciens liens.
+
+Le sélecteur utilise `localized-loader.js` pour charger la page source et réécrire les liens internes vers la langue active, tandis que `script.js` applique les traductions d'interface.
