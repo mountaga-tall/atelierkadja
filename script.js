@@ -405,7 +405,7 @@
     window.setTimeout(() => {
       siteLoader.classList.add('is-done');
       siteLoader.setAttribute('aria-hidden', 'true');
-    }, 1100);
+    }, 650);
   }
 
   // ---------------------------------------------------------
