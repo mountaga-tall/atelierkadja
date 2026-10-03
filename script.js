@@ -93,9 +93,9 @@
     'Longue robe droite en mesh imprimée motifs Bogolan marron.': 'Long straight mesh dress printed with brown Bogolan motifs.',
     'Longue robe volante aux manches bouffantes réalisées avec l’imprimé Bogolan marron.': 'Long flowing dress with puff sleeves made from brown Bogolan print.',
     'Longue robe volante en mesh imprimée motifs Bogolan bleu.': 'Long flowing mesh dress printed with blue Bogolan motifs.',
-    'Compléments': 'Complements',
-    'Tout le Coming Soon': 'All Coming Soon',
-    'Voir le Coming Soon ↗': 'View Coming Soon ↗',
+    'Compléments': 'Accessories',
+    'Tout le Coming Soon': 'All coming soon',
+    'Voir le Coming Soon ↗': 'View coming soon ↗',
     'Explorer ↗': 'Explore ↗',
     'Rechercher': 'Search',
     'Résultats': 'Results',
@@ -1801,3 +1801,12 @@
   });
 
 })();
+
+  // ---------------------------------------------------------
+  // Service worker registration
+  // ---------------------------------------------------------
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("sw.js").catch(() => {});
+    });
+  }
