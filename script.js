@@ -317,8 +317,8 @@
       if (translated !== value) textNode.nodeValue = translated;
     });
 
-    document.querySelectorAll('[placeholder],[aria-label],[title],img[alt]').forEach(el => {
-      ['placeholder','aria-label','title','alt'].forEach(attr => {
+    document.querySelectorAll('[placeholder],[aria-label],[title],img[alt],meta[name="description"],meta[property="og:title"],meta[property="og:description"]').forEach(el => {
+      ['placeholder','aria-label','title','alt','content'].forEach(attr => {
         if (el.hasAttribute(attr)) el.setAttribute(attr, translateString(el.getAttribute(attr)));
       });
     });
