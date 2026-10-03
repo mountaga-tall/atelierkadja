@@ -1,7 +1,7 @@
-const CACHE = 'atelier-kadja-v10';
+const CACHE = 'atelier-kadja-v11';
 
 const APP_SHELL = [
-  "./", "./index.html", "./styles.css", "./script.js", "./manifest.json",
+  "./", "./index.html", "./styles.css", "./script.js", "./localized-loader.js", "./manifest.json",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/kadja-mark.png",
   "./adire.html", "./anena.html", "./assiri.html", "./caftans-atypiques.html",
   "./caftans-brodes.html", "./caftans.html", "./chemises-tee-shirts-tops.html",
