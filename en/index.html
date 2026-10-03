@@ -3,7 +3,13 @@
 <head><base href="../">
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#111111"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-src 'none'; form-action 'self' https://wa.me; upgrade-insecure-requests">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap">
+<meta name="theme-color" content="#111111"/>
   <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -11,7 +17,7 @@
   <link href="/en/manifest.json" rel="manifest"/>
   <link href="icons/icon-192.png" rel="apple-touch-icon"/>
   <link href="icons/icon-192.png" rel="icon"/>
-  <link href="styles.css?v=20261003-kadja-v11" rel="stylesheet"/>
+  <link href="styles.css?v=20261003-kadja-v12" rel="stylesheet"/>
   <title>ATELIER KADJA | Catalog</title>
   <meta name="description" content="Atelier Kadja digital catalog — Ivorian Fashion House in Abidjan."/>
 
@@ -87,7 +93,7 @@
       "email": "latelierkadja@outlook.fr",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Cocody Angré 8e Tranche",
+        "streetAddress": "Cocody Angré 8th Tranche",
         "addressLocality": "Abidjan",
         "addressCountry": "CI"
       },
@@ -166,10 +172,10 @@
             <div class="mega-menu">
 
               <div class="mega-group">
-                <a class="mega-group-title" href="/en/chemises-tee-shirts-tops.html">Shirts, Tops & T-shirts</a>
+                <a class="mega-group-title" href="/en/shirts-tee-shirts-tops.html">Shirts, Tops & T-shirts</a>
                 <a href="/en/tee-shirts.html">T-shirts</a>
                 <a href="/en/tops.html">Tops</a>
-                <a href="/en/coming-soon.html#chemises">Shirts <span class="menu-note">coming soon</span></a>
+                <a href="/en/coming-soon.html#shirts">Shirts <span class="menu-note">coming soon</span></a>
               </div>
 
               <div class="mega-group">
@@ -270,8 +276,8 @@
       <article class="editorial-slide" id="lewa">
         <a class="editorial-media" href="/en/lewa.html" aria-label="Découvrir Lewa Atelier Kadja">
           <img
-            src="images/ROBES/Robes volantes/lewa/robev2.webp"
-            alt="Robe Lewa Red Orange Atelier Kadja"
+            src="images/ROBES/Flowing dresses/lewa/robev2.webp"
+            alt="Dress Lewa Red Orange Atelier Kadja"
             loading="lazy"
             decoding="async">
 
@@ -282,7 +288,7 @@
           <div class="editorial-copy editorial-copy-light">
             <span class="editorial-kicker">02 · Silhouettes</span>
             <h2>LEWA</h2>
-            <p>Robe volante Lewa · Red Orange</p>
+            <p>Flowing dress Lewa · Red Orange</p>
             <span class="editorial-link">Discover ↗</span>
           </div>
 
@@ -367,7 +373,7 @@
         <h2 class="section-title">Pieces imagined as chapters.</h2>
         <p class="section-subtitle">
           Une maison de mode ivoirienne qui compose des silhouettes contemporaines,
-          entre matières, coupes, imprimés et presence.
+          entre matières, coupes, prints et presence.
         </p>
       </div>
     </section>
@@ -387,7 +393,7 @@
 
           <a class="editorial-quick-card" href="/en/ensembles.html">
             <img
-              src="images/ENSEMBLES/Pantalons/adire/nouv1.webp"
+              src="images/ENSEMBLES/Trouserss/adire/nouv1.webp"
               alt="Collection Adiré Atelier Kadja"
               loading="lazy"
               decoding="async">
@@ -399,7 +405,7 @@
             </span>
           </a>
 
-          <a class="editorial-quick-card" href="/en/chemises-tee-shirts-tops.html">
+          <a class="editorial-quick-card" href="/en/shirts-tee-shirts-tops.html">
             <img
               src="images/CHEMISES, TEE-SHIRTS & TOPS/Tee-shirts/t1r.webp"
               alt="Shirts, Tops & T-shirts"
@@ -478,7 +484,7 @@
 
           <a class="editorial-quick-card" href="/en/fatila.html">
             <img
-              src="images/ROBES/Robes volantes/fatila/fatila1.webp"
+              src="images/ROBES/Flowing dresses/fatila/fatila1.webp"
               alt="Fatila flowing dress"
               loading="lazy"
               decoding="async">
@@ -492,7 +498,7 @@
 
           <a class="editorial-quick-card" href="/en/anena.html">
             <img
-              src="images/ENSEMBLES/Pantalons/Anena/img_5044.jpg.webp"
+              src="images/ENSEMBLES/Trouserss/Anena/img_5044.jpg.webp"
               alt="Anéna set"
               loading="lazy"
               decoding="async">
@@ -506,7 +512,7 @@
 
           <a class="editorial-quick-card" href="/en/assiri.html">
             <img
-              src="images/ENSEMBLES/Pantalons/Assiri/assiri1.webp"
+              src="images/ENSEMBLES/Trouserss/Assiri/assiri1.webp"
               alt="Assiri set"
               loading="lazy"
               decoding="async">
@@ -520,7 +526,7 @@
 
           <a class="editorial-quick-card" href="/en/sawa-set.html">
             <img
-              src="images/ENSEMBLES/Pantalons/Sawa set/enspantr1.webp"
+              src="images/ENSEMBLES/Trouserss/Sawa set/enspantr1.webp"
               alt="Sawa set"
               loading="lazy"
               decoding="async">
@@ -534,7 +540,7 @@
 
           <a class="editorial-quick-card" href="/en/lewa.html">
             <img
-              src="images/ROBES/Robes volantes/lewa/robev2.webp"
+              src="images/ROBES/Flowing dresses/lewa/robev2.webp"
               alt="Lewa flowing dress"
               loading="lazy"
               decoding="async">
@@ -559,7 +565,7 @@
             <h2 class="section-title small-title">The house's next lines.</h2>
             <p class="section-subtitle">
               Shirts, midi dresses et courtes, simple caftans, leather goods,
-              accessories et autres pièces in preparation.
+              accessories et autres pieces in preparation.
             </p>
           </div>
           <a class="text-link" href="/en/coming-soon.html">View Coming Soon ↗</a>
@@ -624,7 +630,7 @@
       <div>
         <div class="footer-heading">Collections</div>
         <div class="footer-links footer-columns">
-          <a href="/en/chemises-tee-shirts-tops.html">Shirts, Tops & T-shirts</a>
+          <a href="/en/shirts-tee-shirts-tops.html">Shirts, Tops & T-shirts</a>
           <a href="/en/robes.html">Dresses</a>
           <a href="/en/ensembles.html">Sets</a>
           <a href="/en/caftans.html">Caftans</a>
@@ -736,14 +742,6 @@
   <div class="site-progress" aria-hidden="true"><span></span></div>
   <div class="cursor-glow" aria-hidden="true"></div>
 
-  <script defer src="script.js?v=20260928-kadja-v10"></script>
-
-  <script id="kadja-sw-registered">
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("sw.js").catch(() => {});
-      });
-    }
-  </script>
+  <script defer src="script.js?v=20261003-kadja-v12"></script>
 </body>
 </html>
