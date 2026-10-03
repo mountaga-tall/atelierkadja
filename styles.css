@@ -3783,3 +3783,11 @@ main img:not(.brand-mark img):not(.site-loader-mark img){
 .editorial-quick-card:hover img{
   transform:none!important;
 }
+
+
+/* Photo heroes: keep the outer letterbox tone uniform with the image edges. */
+body[data-page="index"] #top01 .editorial-shade::before,
+body[data-page="index"] #lewa .editorial-shade::before,
+body[data-page="index"] #caftans .editorial-shade::before{
+  display:none;
+}
