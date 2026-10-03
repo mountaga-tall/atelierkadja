@@ -29,7 +29,7 @@ FR_ON_EN = re.compile(
 )
 EN_ON_FR = re.compile(
     r'(Open the gallery|View the gallery|\bHome\b|\bNew arrivals\b|\bThe House\b|'
-    r'\bMade-to-measure\b|\bOrder\b|\bDiscover\b|\bExplore\b|\bComing soon\b|'
+    r'\bMade-to-measure\b|\bOrder\b|\bDiscover\b|\bExplore\b|'
     r'\bFull name\b|\bYour message\b|Send on WhatsApp|\bpreview\b)',
     re.I,
 )
