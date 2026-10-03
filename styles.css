@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
-
 :root{
   --bg:#f9f8f6;
   --paper:#fff;
@@ -3655,7 +3653,7 @@ body[data-page="index"] .editorial-slide{
 /* HOME HERO IMAGE FRAMES */
 body[data-page="index"] #top01{--editorial-bg:#ededed;}
 body[data-page="index"] #lewa{--editorial-bg:#e7dfd8;}
-body[data-page="index"] #caftans{--editorial-bg:#17110e;}
+body[data-page="index"] #caftans{--editorial-bg:#a64b2f;}
 body[data-page="index"] #nouveautes{--editorial-bg:#a94b2c;}
 
 body[data-page="index"] .editorial-media,
