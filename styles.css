@@ -3650,3 +3650,35 @@ body[data-page="index"] .editorial-slide{
     display:grid;
   }
 }
+
+
+/* HOME HERO IMAGE FRAMES */
+body[data-page="index"] #top01{--editorial-bg:#ededed;}
+body[data-page="index"] #lewa{--editorial-bg:#e7dfd8;}
+body[data-page="index"] #caftans{--editorial-bg:#17110e;}
+body[data-page="index"] #nouveautes{--editorial-bg:#a94b2c;}
+
+body[data-page="index"] .editorial-media,
+body[data-page="index"] .editorial-media img,
+body[data-page="index"] .editorial-media video{
+  background:var(--editorial-bg);
+}
+
+body[data-page="index"] .editorial-outline-word{
+  opacity:1;
+  -webkit-text-stroke:1.1px rgba(255,255,255,.31);
+}
+
+@media (max-width:640px){
+  body[data-page="index"] .editorial-outline-word{
+    opacity:1;
+    -webkit-text-stroke:1.1px rgba(255,255,255,.59);
+  }
+}
+
+@media (min-width:901px){
+  .editorial-quick-card:nth-child(10),
+  .editorial-quick-card:nth-child(11){
+    grid-column:span 6;
+  }
+}
