@@ -12,8 +12,7 @@
     })
     .then(html => {
       html = html
-        .replace('<html lang="fr">', '<html lang="' + locale + '">')
-        .replace(/<script id="kadja-sw-registered">[\s\S]*?<\/script>/i, '');
+        .replace('<html lang="fr">', '<html lang="' + locale + '">');
 
       html = html.replace(
         /href="(?!https?:\/\/|mailto:|#|\/)([^"]+\.html(?:#[^"]*)?)"/gi,
@@ -30,7 +29,13 @@
       document.close();
     })
     .catch(error => {
-      document.body.innerHTML = '<main style="font:16px system-ui;padding:40px">Unable to load this page.</main>';
+      const message = locale === 'en'
+        ? 'Unable to load this page.'
+        : 'Impossible de charger cette page.';
+      document.body.innerHTML =
+        '<main style="font:16px system-ui;padding:40px">' +
+        message +
+        '</main>';
       console.error(error);
     });
 })();
