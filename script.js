@@ -104,6 +104,33 @@
     'Disponibilité': 'Availability',
     'Disponible': 'Available',
     'Sur réservation': 'By reservation'
+    // Accessibility and dynamic-message translations
+    "Galerie photo": "Photo gallery",
+    "Fermer": "Close",
+    "Afficher la photo": "View photo",
+    "Je souhaite échanger avec la maison au sujet de ma demande.": "I would like to discuss my request with the house.",
+    "Rendez-vous · commande · information": "Appointment · order · information",
+    "Votre demande": "Your request",
+    "Votre demande, directement sur WhatsApp.": "Your request, directly on WhatsApp.",
+    "Informations produit": "Product information",
+    "Prochaine sélection": "Next selection",
+    "à préparer": "to be prepared",
+    "en préparation": "in preparation",
+    "Le vestiaire robes": "The dress wardrobe",
+    "Robe longue 01": "Long dress 01",
+    "Robe longue 02": "Long dress 02",
+    "Robe longue 03": "Long dress 03",
+    "Robe longue 04": "Long dress 04",
+    "Robe longue 05": "Long dress 05",
+    "Robe longue 06": "Long dress 06",
+    "les photos sont regroupées": "the photos are grouped",
+    "sur la page dédiée": "on the dedicated page",
+    "sans doublon": "without duplication",
+    "information non renseignée": "information not provided",
+    "informations commerciales non renseignées": "commercial information not provided",
+    "4 vues": "4 views",
+    "2 vues": "2 views",
+    "1 vue": "1 view",
     // Final page-specific translations
     "Ensemble Assiri": "Assiri set",
     "Caftan Typique 01": "Typical Caftan 01",
@@ -307,27 +334,34 @@
 
   const translateString = value => {
     if (!value || locale !== 'en') return value;
+
     let result = value;
     result = result.replace(/(\d+)\s+modèles/g, '$1 designs');
     result = result.replace(/(\d+)\s+coloris/g, '$1 colorways');
-    result = result.replace(/(\d+)\s+vues?/g, '$1 view  const translateString = value => {
-    if (!value || locale !== 'en') return value;'.endsWith('s') ? '$1 views' : '$1 view');
-    result = result.replace(/(\d+)\s+pièces/g, '$1 pieces');
+    result = result.replace(/(\d+)\s+vues?/g, '$1 views');
     result = result.replace(/(\d+)\s+vue\(s\)/g, '$1 view(s)');
-    let result = value;
+    result = result.replace(/(\d+)\s+pièces/g, '$1 pieces');
+
     Object.keys(localeTranslations)
       .sort((a, b) => b.length - a.length)
       .forEach(key => {
-        const lowerInitial = key ? key.charAt(0).toLowerCase() + key.slice(1) : key;
+        const lowerInitial = key
+          ? key.charAt(0).toLowerCase() + key.slice(1)
+          : key;
+
         result = result.split(key).join(localeTranslations[key]);
+
         if (lowerInitial !== key) {
           result = result.split(lowerInitial).join(
-            localeTranslations[key].charAt(0).toLowerCase() + localeTranslations[key].slice(1)
+            localeTranslations[key].charAt(0).toLowerCase() +
+            localeTranslations[key].slice(1)
           );
         }
       });
+
     return result;
   };
+
 
   const translatePage = () => {
     if (locale !== 'en') return;
