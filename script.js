@@ -299,7 +299,6 @@
     "vue(s)": "view(s)",
     "Prix sur demande": "Price on request",
     "Sur demande": "On request",
-,
     'Adiré Atelier Kadja : 10 looks, 35 000 FCFA, avec toutes les vues regroupées par look.': 'Adiré Atelier Kadja: 10 looks, 35,000 FCFA, with all views grouped by look.',
     'Ensemble Anéna Atelier Kadja : pantalon et top crop manches courtes, 35 000 FCFA.': 'Anéna set Atelier Kadja: trousers and short-sleeve cropped top, 35,000 FCFA.',
     'Caftans atypiques Atelier Kadja : 4 modèles, prix sur demande, galeries dédiées.': 'Distinctive caftans Atelier Kadja: 4 designs, price on request, dedicated galleries.',
