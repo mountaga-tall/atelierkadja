@@ -104,6 +104,13 @@
     'Disponibilité': 'Availability',
     'Disponible': 'Available',
     'Sur réservation': 'By reservation',
+    // Search and PWA translations
+    "Aucun résultat. Essayez un autre terme.": "No results. Try another term.",
+    "Voir la page": "View page",
+    "Installer l’app Atelier Kadja": "Install the Atelier Kadja app",
+    "Accédez au catalogue depuis votre écran d’accueil.": "Access the catalog from your home screen.",
+    "Ajoutez Atelier Kadja à votre écran d’accueil depuis le menu du navigateur.": "Add Atelier Kadja to your home screen from your browser menu.",
+    "Installer Atelier Kadja": "Install Atelier Kadja",
     // Accessibility and dynamic-message translations
     "Galerie photo": "Photo gallery",
     "Fermer": "Close",
@@ -406,7 +413,7 @@
     link.href = localeSwitch();
     link.setAttribute('data-locale-switcher', '');
     link.setAttribute('aria-label', locale === 'en' ? 'Switch to French' : 'Switch to English');
-    link.title = locale === 'en' ? 'Passer en français' : 'Switch to English';
+    link.title = locale === 'en' ? 'Switch to French' : 'Passer en anglais';
     link.innerHTML = '<span class="locale-option ' + (locale === 'fr' ? 'is-active' : '') + '">FR</span><span class="locale-divider">/</span><span class="locale-option ' + (locale === 'en' ? 'is-active' : '') + '">EN</span>';
     link.style.cssText = 'position:fixed;top:96px;right:18px;z-index:9998;display:flex;align-items:center;gap:3px;padding:4px 6px;border:1px solid rgba(17,17,17,.14);border-radius:999px;background:rgba(255,255,255,.9);box-shadow:0 10px 26px rgba(17,17,17,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font:600 10px/1 system-ui,sans-serif;letter-spacing:.08em;color:#111;text-decoration:none';
     link.querySelectorAll('.locale-option').forEach(option => {
