@@ -939,9 +939,8 @@ video{
   transition:transform .75s cubic-bezier(.2,.7,.2,1);
 }
 
-.editorial-quick-card:hover img,
 .editorial-quick-card:hover video{
-  transform:scale(1.035);
+  transform:scale(1.025);
 }
 
 .editorial-quick-shade{
@@ -3684,12 +3683,22 @@ body[data-page="index"] .editorial-outline-word{
 
 /* Fast, uncropped image presentation */
 .editorial-quick-card img{
-  object-fit:contain;
-  object-position:center;
+  object-fit:contain!important;
+  object-position:center!important;
   background:#ece7e0;
+  transform:none!important;
 }
 
 .lightbox-thumb img{
   object-fit:contain;
   object-position:center;
+}
+
+
+/* Performance: defer below-the-fold collection grids. */
+.editorial-quick-grid,
+.product-grid,
+.subcategory-grid{
+  content-visibility:auto;
+  contain-intrinsic-size:900px;
 }
