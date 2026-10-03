@@ -3756,3 +3756,30 @@ main img{
     opacity:.02;
   }
 }
+
+
+/* FINAL MEDIA SAFETY: no content photo may be crop-filled. */
+main img:not(.brand-mark img):not(.site-loader-mark img){
+  object-fit:contain!important;
+  object-position:center!important;
+}
+
+.editorial-quick-card{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--quick-bg,#ece7e0);
+}
+
+.editorial-quick-card img{
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+}
+
+.editorial-quick-card:hover img{
+  transform:none!important;
+}
