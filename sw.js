@@ -43,21 +43,25 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // CSS/JS are fetched fresh so a deployment cannot leave the previous
-  // version stuck behind the browser HTTP cache.
+  // Code assets use stale-while-revalidate: cached code renders immediately,
+  // while the network refreshes it in the background.
   const isCodeAsset = /\/(?:styles|script)\.js$/.test(new URL(request.url).pathname) ||
     /\/styles\.css$/.test(new URL(request.url).pathname);
   if (isCodeAsset) {
     event.respondWith(
-      fetch(request, { cache: 'no-store' })
-        .then(response => {
-          if (response.ok && isSameOrigin(request)) {
-            const copy = response.clone();
-            caches.open(CACHE).then(cache => cache.put(request, copy)).catch(() => {});
-          }
-          return response;
-        })
-        .catch(() => caches.match(request).then(cached => cached || Response.error()))
+      caches.match(request).then(cached => {
+        const network = fetch(request, { cache: 'no-store' })
+          .then(response => {
+            if (response.ok && isSameOrigin(request)) {
+              const copy = response.clone();
+              caches.open(CACHE).then(cache => cache.put(request, copy)).catch(() => {});
+            }
+            return response;
+          })
+          .catch(() => cached || Response.error());
+
+        return cached || network;
+      })
     );
     return;
   }
