@@ -103,7 +103,7 @@
     'Prix': 'Price',
     'Disponibilité': 'Availability',
     'Disponible': 'Available',
-    'Sur réservation': 'By reservation'
+    'Sur réservation': 'By reservation',
     // Accessibility and dynamic-message translations
     "Galerie photo": "Photo gallery",
     "Fermer": "Close",
