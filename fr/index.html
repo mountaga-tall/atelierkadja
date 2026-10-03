@@ -3,7 +3,13 @@
 <head><base href="../">
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="theme-color" content="#111111"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-src 'none'; form-action 'self' https://wa.me; upgrade-insecure-requests">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap">
+<meta name="theme-color" content="#111111"/>
   <meta name="mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -11,7 +17,7 @@
   <link href="/fr/manifest.json" rel="manifest"/>
   <link href="icons/icon-192.png" rel="apple-touch-icon"/>
   <link href="icons/icon-192.png" rel="icon"/>
-  <link href="styles.css?v=20261003-kadja-v11" rel="stylesheet"/>
+  <link href="styles.css?v=20261003-kadja-v12" rel="stylesheet"/>
   <title>ATELIER KADJA | Catalogue</title>
   <meta name="description" content="Catalogue digital Atelier Kadja — Maison de Mode Ivoirienne à Abidjan."/>
 
@@ -214,7 +220,7 @@
               <div class="mega-group mega-group-wide">
                 <a href="/fr/coming-soon.html#combinaisons">Combinaisons <span class="menu-note">à venir</span></a>
                 <a href="/fr/coming-soon.html#survetements">Survêtements <span class="menu-note">à venir</span></a>
-                <a class="mega-coming" href="/fr/coming-soon.html">Voir tout le Coming Soon ↗</a>
+                <a class="mega-coming" href="/fr/coming-soon.html">Voir toutes les rubriques à venir ↗</a>
               </div>
 
               <a class="mega-family" href="/fr/ensembles.html">Explorer toutes les familles de collections ↗</a>
@@ -562,7 +568,7 @@
               accessoires et autres pièces en préparation.
             </p>
           </div>
-          <a class="text-link" href="/fr/coming-soon.html">Voir le Coming Soon ↗</a>
+          <a class="text-link" href="/fr/coming-soon.html">Voir les rubriques à venir ↗</a>
         </div>
       </div>
     </section>
@@ -630,7 +636,7 @@
           <a href="/fr/caftans.html">Caftans</a>
           <a href="/fr/pantalons.html">Pantalons</a>
           <a href="/fr/maillots-de-bain.html">Maillots de bain</a>
-          <a href="/fr/coming-soon.html">Tout le Coming Soon</a>
+          <a href="/fr/coming-soon.html">Toutes les rubriques à venir</a>
         </div>
       </div>
 
@@ -736,14 +742,6 @@
   <div class="site-progress" aria-hidden="true"><span></span></div>
   <div class="cursor-glow" aria-hidden="true"></div>
 
-  <script defer src="script.js?v=20260928-kadja-v10"></script>
-
-  <script id="kadja-sw-registered">
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("sw.js").catch(() => {});
-      });
-    }
-  </script>
+  <script defer src="script.js?v=20261003-kadja-v12"></script>
 </body>
 </html>
