@@ -1,5 +1,185 @@
 (() => {
   'use strict';
+  // ---------------------------------------------------------
+  // FR / EN language switcher and lightweight static translation
+  // ---------------------------------------------------------
+
+  const locale = location.pathname.split('/').filter(Boolean)[0] === 'en' ? 'en' : 'fr';
+  const currentFile = location.pathname.split('/').pop() || 'index.html';
+
+  const localeTranslations = {
+    'ATELIER KADJA | Catalogue': 'ATELIER KADJA | Catalog',
+    'ATELIER KADJA | Robes longues': 'ATELIER KADJA | Long dresses',
+    'Maison de Mode Ivoirienne · Abidjan': 'Ivorian Fashion House · Abidjan',
+    'Rechercher sur tout le site': 'Search the entire site',
+    'Rechercher sur le site…': 'Search the site…',
+    'Accueil': 'Home',
+    'Nouveautés': 'New arrivals',
+    'Chemises, Tops & tee-shirt': 'Shirts, Tops & T-shirts',
+    'Tee-shirts': 'T-shirts',
+    'Chemises': 'Shirts',
+    'à venir': 'coming soon',
+    'Robes volantes': 'Flowing dresses',
+    'Robes longues': 'Long dresses',
+    'Robes midi': 'Midi dresses',
+    'Robes courtes': 'Short dresses',
+    'Robes': 'Dresses',
+    'Ensembles': 'Sets',
+    'Caftans atypiques': 'Distinctive caftans',
+    'Caftans brodés': 'Embroidered caftans',
+    'Caftans simples': 'Simple caftans',
+    'Caftans': 'Caftans',
+    'Pantalons': 'Trousers',
+    'Maillots de bain': 'Swimwear',
+    'Jupes': 'Skirts',
+    'Blazers': 'Blazers',
+    'Maroquinerie': 'Leather goods',
+    'Sacs': 'Bags',
+    'Ceintures': 'Belts',
+    'Portefeuilles': 'Wallets',
+    'Petite maroquinerie': 'Small leather goods',
+    'Accessoires': 'Accessories',
+    'Combinaisons': 'Jumpsuits',
+    'Survêtements': 'Tracksuits',
+    'Voir tout le Coming Soon': 'View all Coming Soon',
+    'Explorer toutes les familles de collections ↗': 'Explore all collection families ↗',
+    'La Maison': 'The House',
+    'Sur mesure': 'Made-to-measure',
+    'Contact': 'Contact',
+    'Commander': 'Order',
+    'Commander ↗': 'Order ↗',
+    'Découvrir ↗': 'Discover ↗',
+    'Découvrir les nouveautés ↗': 'Discover new arrivals ↗',
+    'Voir les nouveautés ↗': 'View new arrivals ↗',
+    'Le vestiaire Kadja': 'The Kadja wardrobe',
+    'Des pièces pensées comme des chapitres.': 'Pieces imagined as chapters.',
+    'Collections disponibles': 'Available collections',
+    'Explorer les univers': 'Explore the worlds',
+    'Tout voir ↗': 'View all ↗',
+    'Pièces essentielles': 'Essential pieces',
+    'Les prochaines lignes de la maison.': "The house's next lines.",
+    'À venir': 'Coming soon',
+    'Une création, une histoire, un échange.': 'A creation, a story, an exchange.',
+    "L'élégance contemporaine imaginée à Abidjan.": 'Contemporary elegance imagined in Abidjan.',
+    'Explorer': 'Explore',
+    'Plan du site': 'Site map',
+    'Suivre la maison': 'Follow the house',
+    'Catalogue digital': 'Digital catalog',
+    'Menu': 'Menu',
+    'WhatsApp': 'WhatsApp',
+    'Maison de Mode Ivoirienne': 'Ivorian Fashion House',
+    'Nouveauté': 'New arrival',
+    '01 · Nouveauté': '01 · New arrival',
+    '04 · La maison': '04 · The House',
+    'Des silhouettes conçues comme des pièces fortes': 'Silhouettes designed as statement pieces',
+    'Les dernières silhouettes de la maison': "The house's latest silhouettes",
+    'Ensembles pantalon + chemise': 'Trouser + shirt sets',
+    'Robes volantes et robes longues': 'Flowing and long dresses',
+    'Voir les nouveautés': 'View new arrivals',
+    'Robe · Silhouettes longues': 'Dresses · Long silhouettes',
+    'Robes · Silhouettes longues': 'Dresses · Long silhouettes',
+    '7 robes présentées séparément, une photo dédiée par produit.': '7 dresses presented individually, with one dedicated photo per product.',
+    'Longue robe volante en mesh imprimée motifs Bogolan rose.': 'Long flowing mesh dress printed with pink Bogolan motifs.',
+    'Longue robe droite en mesh imprimée motifs Bogolan rose.': 'Long straight mesh dress printed with pink Bogolan motifs.',
+    'Longue robe droite en mesh imprimée motifs Bogolan noir.': 'Long straight mesh dress printed with black Bogolan motifs.',
+    'Longue robe volante en mesh imprimée motifs Bogolan marron.': 'Long flowing mesh dress printed with brown Bogolan motifs.',
+    'Longue robe droite en mesh imprimée motifs Bogolan marron.': 'Long straight mesh dress printed with brown Bogolan motifs.',
+    'Longue robe volante aux manches bouffantes réalisées avec l’imprimé Bogolan marron.': 'Long flowing dress with puff sleeves made from brown Bogolan print.',
+    'Longue robe volante en mesh imprimée motifs Bogolan bleu.': 'Long flowing mesh dress printed with blue Bogolan motifs.',
+    'Compléments': 'Complements',
+    'Tout le Coming Soon': 'All Coming Soon',
+    'Voir le Coming Soon ↗': 'View Coming Soon ↗',
+    'Explorer ↗': 'Explore ↗',
+    'Commander': 'Order',
+    'Rechercher': 'Search',
+    'Résultats': 'Results',
+    'Aucun résultat': 'No results',
+    'Fermer le menu': 'Close menu',
+    'Ouvrir le menu': 'Open menu',
+    'Navigation principale': 'Main navigation',
+    'Navigation mobile': 'Mobile navigation',
+    'Réseaux sociaux': 'Social media',
+    'Contacter Atelier Kadja sur WhatsApp': 'Contact Atelier Kadja on WhatsApp',
+    'Voir la fiche': 'View details',
+    'Prix': 'Price',
+    'Disponibilité': 'Availability',
+    'Disponible': 'Available',
+    'Sur réservation': 'By reservation'
+  };
+
+  const localeSwitch = () => {
+    const next = locale === 'en' ? 'fr' : 'en';
+    const file = currentFile || 'index.html';
+    return '/' + next + '/' + (file === 'index.html' ? 'index.html' : file);
+  };
+
+  const translateString = value => {
+    if (!value || locale !== 'en') return value;
+    let result = value;
+    Object.keys(localeTranslations)
+      .sort((a, b) => b.length - a.length)
+      .forEach(key => {
+        result = result.split(key).join(localeTranslations[key]);
+      });
+    return result;
+  };
+
+  const translatePage = () => {
+    if (locale !== 'en') return;
+    document.title = translateString(document.title);
+
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    let node;
+    while ((node = walker.nextNode())) textNodes.push(node);
+
+    textNodes.forEach(textNode => {
+      const value = textNode.nodeValue || '';
+      const translated = translateString(value);
+      if (translated !== value) textNode.nodeValue = translated;
+    });
+
+    document.querySelectorAll('[placeholder],[aria-label],[title],img[alt]').forEach(el => {
+      ['placeholder','aria-label','title','alt'].forEach(attr => {
+        if (el.hasAttribute(attr)) el.setAttribute(attr, translateString(el.getAttribute(attr)));
+      });
+    });
+
+    document.documentElement.lang = 'en';
+  };
+
+  const addLocaleSwitcher = () => {
+    if (document.querySelector('[data-locale-switcher]')) return;
+
+    const link = document.createElement('a');
+    link.href = localeSwitch();
+    link.setAttribute('data-locale-switcher', '');
+    link.setAttribute('aria-label', locale === 'en' ? 'Switch to French' : 'Switch to English');
+    link.title = locale === 'en' ? 'Passer en français' : 'Switch to English';
+    link.innerHTML = '<span class="locale-option ' + (locale === 'fr' ? 'is-active' : '') + '">FR</span><span class="locale-divider">/</span><span class="locale-option ' + (locale === 'en' ? 'is-active' : '') + '">EN</span>';
+    link.style.cssText = 'position:fixed;top:96px;right:18px;z-index:9998;display:flex;align-items:center;gap:3px;padding:4px 6px;border:1px solid rgba(17,17,17,.14);border-radius:999px;background:rgba(255,255,255,.9);box-shadow:0 10px 26px rgba(17,17,17,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font:600 10px/1 system-ui,sans-serif;letter-spacing:.08em;color:#111;text-decoration:none';
+    link.querySelectorAll('.locale-option').forEach(option => {
+      option.style.cssText = 'padding:6px 7px;border-radius:999px;color:#5c5750;transition:.2s ease';
+      if (option.classList.contains('is-active')) {
+        option.style.background = '#111';
+        option.style.color = '#fff';
+      }
+    });
+    const divider = link.querySelector('.locale-divider');
+    divider.style.cssText = 'color:#9a948a';
+    document.body.appendChild(link);
+  };
+
+  document.documentElement.lang = locale;
+  addLocaleSwitcher();
+
+  if (locale === 'en') {
+    translatePage();
+    const translationObserver = new MutationObserver(() => translatePage());
+    translationObserver.observe(document.body, { subtree: true, childList: true });
+    window.addEventListener('beforeunload', () => translationObserver.disconnect(), { once: true });
+  }
+
 
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
