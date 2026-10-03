@@ -105,6 +105,32 @@
     'Disponibilité': 'Availability',
     'Disponible': 'Available',
     'Sur réservation': 'By reservation'
+,
+    'Adiré Atelier Kadja : 10 looks, 35 000 FCFA, avec toutes les vues regroupées par look.': 'Adiré Atelier Kadja: 10 looks, 35,000 FCFA, with all views grouped by look.',
+    'Ensemble Anéna Atelier Kadja : pantalon et top crop manches courtes, 35 000 FCFA.': 'Anéna set Atelier Kadja: trousers and short-sleeve cropped top, 35,000 FCFA.',
+    'Caftans atypiques Atelier Kadja : 4 modèles, prix sur demande, galeries dédiées.': 'Distinctive caftans Atelier Kadja: 4 designs, price on request, dedicated galleries.',
+    'Caftans brodés Atelier Kadja : 5 modèles, prix sur demande, galeries dédiées.': 'Embroidered caftans Atelier Kadja: 5 designs, price on request, dedicated galleries.',
+    'Caftans Atelier Kadja : atypiques, brodés et prochainement simples.': 'Atelier Kadja caftans: distinctive, embroidered, and simple styles coming soon.',
+    'Chemises, Tops & tee-shirt — index des pièces essentielles Atelier Kadja.': 'Shirts, Tops & T-shirts — index of essential Atelier Kadja pieces.',
+    'Toutes les rubriques Atelier Kadja encore en préparation, regroupées sur une seule page.': 'All Atelier Kadja sections still in preparation, gathered on one page.',
+    'Coordonnées officielles et contact de la Maison de Mode Ivoirienne ATELIER KADJA.': 'Official contact details for Ivorian Fashion House ATELIER KADJA.',
+    'Ensembles Atelier Kadja : Adiré, Assiri, Anéna et Sawa set, avec fiches et galeries dédiées.': 'Atelier Kadja sets: Adiré, Assiri, Anéna and Sawa set, with dedicated pages and galleries.',
+    'Robe Fatila Atelier Kadja : dos nu, Dempé batik, 20 000 FCFA.': 'Fatila Atelier Kadja dress: open back, Dempé batik, 20,000 FCFA.',
+    'Catalogue digital Atelier Kadja — Maison de Mode Ivoirienne à Abidjan.': 'Atelier Kadja digital catalog — Ivorian Fashion House in Abidjan.',
+    'Identité, vision et univers de la Maison de Mode Ivoirienne ATELIER KADJA.': 'Identity, vision and world of Ivorian Fashion House ATELIER KADJA.',
+    'Robes Lewa Atelier Kadja : deux coloris, 25 000 FCFA, galeries dédiées.': 'Lewa Atelier Kadja dresses: two colorways, 25,000 FCFA, dedicated galleries.',
+    'Nouveautés Atelier Kadja — Adiré, 10 looks et galeries dédiées.': 'Atelier Kadja new arrivals — Adiré, 10 looks and dedicated galleries.',
+    'Pantalons Atelier Kadja : accès aux ensembles et à leurs galeries dédiées.': 'Atelier Kadja trousers: access to sets and their dedicated galleries.',
+    'Robes longues Atelier Kadja : 7 robes avec noms, prix et visuels dédiés.': 'Atelier Kadja long dresses: 7 dresses with names, prices and dedicated visuals.',
+    'Robes Atelier Kadja : robes volantes et robes longues disponibles, midi et courtes à venir.': 'Atelier Kadja dresses: flowing and long dresses available, midi and short styles coming soon.',
+    'Sawa set Atelier Kadja : galerie dédiée avec 4 vues, 40 000 FCFA.': 'Sawa set Atelier Kadja: dedicated gallery with 4 views, 40,000 FCFA.',
+    'Créations sur mesure': 'Made-to-measure creations',
+    'Service sur mesure ATELIER KADJA — rendez-vous, commande et projets personnalisés via WhatsApp.': 'ATELIER KADJA made-to-measure service — appointments, orders and bespoke projects via WhatsApp.',
+    'Tee-shirts Atelier Kadja : 4 coloris en 100% coton, avec galerie dédiée par coloris.': 'Atelier Kadja T-shirts: 4 colors in 100% cotton, with a dedicated gallery for each color.',
+    'Top et pièces essentielles ATELIER KADJA.': 'Tops and essential pieces ATELIER KADJA.',
+    'Sur iPhone/iPad : touchez <strong>Partager</strong> <strong>▢↑</strong>, puis <strong>Ajouter à l’écran d’accueil</strong>.': 'On iPhone/iPad: tap <strong>Share</strong> <strong>▢↑</strong>, then <strong>Add to Home Screen</strong>.',
+    'Ouvrez le menu ⋮ du navigateur, puis choisissez « Ajouter à l’écran d’accueil » ou « Installer l’application ».': 'Open the browser menu ⋮, then choose “Add to Home Screen” or “Install app”.'
+
   };
 
   const localeSwitch = () => {
