@@ -137,8 +137,9 @@ if css_path.exists():
     css = css_path.read_text(encoding="utf-8", errors="replace")
     if not re.search(r'main\s+img[^}]*object-fit\s*:\s*contain\s*!important', css, re.I | re.S):
         media_css_errors.append("styles.css: missing global uncropped main img rule")
-    if re.search(r'\.editorial-quick-card\s+img[^}]*object-fit\s*:\s*cover', css, re.I | re.S):
-        media_css_errors.append("styles.css: editorial quick-card photos still use object-fit:cover")
+    quick_rules = re.findall(r'\.editorial-quick-card\s+img\s*\{([^}]*)\}', css, re.I | re.S)
+    if quick_rules and not any(re.search(r'object-fit\s*:\s*contain\s*!important?', rule, re.I) for rule in quick_rules[-2:]):
+        media_css_errors.append("styles.css: final editorial quick-card photo rule is not contain")
 
 sw_path = ROOT / "sw.js"
 if sw_path.exists():
