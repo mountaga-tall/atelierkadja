@@ -318,7 +318,13 @@
     Object.keys(localeTranslations)
       .sort((a, b) => b.length - a.length)
       .forEach(key => {
+        const lowerInitial = key ? key.charAt(0).toLowerCase() + key.slice(1) : key;
         result = result.split(key).join(localeTranslations[key]);
+        if (lowerInitial !== key) {
+          result = result.split(lowerInitial).join(
+            localeTranslations[key].charAt(0).toLowerCase() + localeTranslations[key].slice(1)
+          );
+        }
       });
     return result;
   };
@@ -342,6 +348,19 @@
       ['placeholder','aria-label','title','alt','content'].forEach(attr => {
         if (el.hasAttribute(attr)) el.setAttribute(attr, translateString(el.getAttribute(attr)));
       });
+    });
+
+    document.querySelectorAll('a[href*="wa.me/"]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (!href) return;
+      const marker = href.indexOf('?text=');
+      if (marker === -1) return;
+      const base = href.slice(0, marker);
+      const query = href.slice(marker + 6);
+      try {
+        const translatedMessage = translateString(decodeURIComponent(query));
+        link.setAttribute('href', base + '?text=' + encodeURIComponent(translatedMessage));
+      } catch (_) {}
     });
 
     document.documentElement.lang = 'en';
