@@ -3,6 +3,13 @@
  <head><base href="../">
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-src 'none'; form-action 'self' https://wa.me; upgrade-insecure-requests">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap">
+
   <meta content="#111111" name="theme-color"/>
   <meta content="yes" name="mobile-web-app-capable"/>
   <meta content="yes" name="apple-mobile-web-app-capable"/>
@@ -11,7 +18,7 @@
   <link href="/fr/manifest.json" rel="manifest"/>
   <link href="icons/icon-192.png" rel="apple-touch-icon"/>
   <link href="icons/icon-192.png" rel="icon"/>
-  <link href="styles.css?v=20260928-kadja-v10" rel="stylesheet"/>
+  <link href="styles.css?v=20261003-kadja-v12" rel="stylesheet"/>
   <title>ATELIER KADJA | Ensembles</title>
   <meta content="Ensembles Atelier Kadja : Adiré, Assiri, Anéna et L’ensemble Sawa, avec fiches et galeries dédiées." name="description"/>
  
@@ -219,7 +226,7 @@
           Sur mesure
          </a>
          <a href="/fr/coming-soon.html">
-          Tout le Coming Soon
+          Toutes les rubriques à venir
          </a>
         </div>
        </div>
@@ -402,7 +409,7 @@
        Maillots de bain
       </a>
       <a href="/fr/coming-soon.html">
-       Tout le Coming Soon
+       Toutes les rubriques à venir
       </a>
      </div>
     </div>
@@ -498,10 +505,7 @@
   </a>
   <div aria-hidden="true" class="cursor-glow">
   </div>
-  <script defer="" src="script.js?v=20260928-kadja-v10">
+  <script defer="" src="script.js?v=20261003-kadja-v12">
   </script>
-  <script id="kadja-sw-registered">
-   if ("serviceWorker" in navigator) { window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {})); }
-  </script>
- </body>
+</body>
 </html>
