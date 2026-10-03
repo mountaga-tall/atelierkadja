@@ -90,7 +90,6 @@
     'Tout le Coming Soon': 'All Coming Soon',
     'Voir le Coming Soon ↗': 'View Coming Soon ↗',
     'Explorer ↗': 'Explore ↗',
-    'Commander': 'Order',
     'Rechercher': 'Search',
     'Résultats': 'Results',
     'Aucun résultat': 'No results',
