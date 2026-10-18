@@ -1,4 +1,4 @@
-const CACHE = 'atelier-kadja-v16';
+const CACHE = 'atelier-kadja-v17';
 
 const APP_SHELL = [
   "./", "./index.html", "./styles.css", "./script.js", "./manifest.json",
