@@ -1,4 +1,4 @@
-const CACHE = 'atelier-kadja-v19-20261019';
+const CACHE = 'atelier-kadja-v20-20261019';
 
 const APP_SHELL = [
   "./", "./index.html", "./styles.css", "./script.js", "./manifest.json",
@@ -9,6 +9,18 @@ const APP_SHELL = [
   "./fr/robes.html", "./en/robes.html",
   "./fr/robes-volantes.html", "./en/robes-volantes.html",
   "./fr/caftans-atypiques.html", "./en/caftans-atypiques.html",
+  "./images/NOUVEAUTÉS/cassmarper.webp",
+  "./images/NOUVEAUTÉS/Cassmarr.webp",
+  "./images/NOUVEAUTÉS/cassrosper.webp",
+  "./images/NOUVEAUTÉS/caftanatyp5.webp",
+  "./images/NOUVEAUTÉS/kanynoir.webp",
+  "./images/NOUVEAUTÉS/kanynoirb.webp",
+  "./images/NOUVEAUTÉS/kanyrose.webp",
+  "./images/NOUVEAUTÉS/kanyroseb.webp",
+  "./images/NOUVEAUTÉS/maliaros.webp",
+  "./images/NOUVEAUTÉS/maliarosb.webp",
+  "./images/NOUVEAUTÉS/maliajau.webp",
+  "./images/NOUVEAUTÉS/maliaver.webp",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/kadja-mark.png",
   "./404.html"
 ];
