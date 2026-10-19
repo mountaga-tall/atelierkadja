@@ -15,7 +15,7 @@
   // Shared navigation: expose the Cassandre Blazers collection in both languages.
   const installBlazersMenuLink = () => {
     const menu = document.querySelector('.nav-collection-menu .mega-menu');
-    if (!menu || menu.querySelector('[data-nav-blazers]')) return;
+    if (!menu || menu.querySelector('[data-nav-blazers]') || menu.querySelector('a[href="/' + locale + '/blazers.html"]')) return;
     const group = document.createElement('div');
     group.className = 'mega-group';
     group.dataset.navBlazers = 'true';
@@ -349,7 +349,7 @@
     'Tee-shirts Atelier Kadja : 4 coloris en 100% coton, avec galerie dédiée par coloris.': 'Atelier Kadja T-shirts: 4 colors in 100% cotton, with a dedicated gallery for each color.',
     'Top et pièces essentielles ATELIER KADJA.': 'Tops and essential pieces ATELIER KADJA.',
     'Sur iPhone/iPad : touchez <strong>Partager</strong> <strong>▢↑</strong>, puis <strong>Ajouter à l’écran d’accueil</strong>.': 'On iPhone/iPad: tap <strong>Share</strong> <strong>▢↑</strong>, then <strong>Add to Home Screen</strong>.',
-    'Ouvrez le menu ⋮ du navigateur, puis choisissez « Ajouter à l’écran d’accueil » ou « Installer l’application ».': 'Open the browser menu ⋮, then choose “Add to Home Screen” or “Install app”.'
+    'Ouvrez le menu ⋮ du navigateur, puis choisissez « Ajouter à l’écran d’accueil » ou « Installer l’application ».': 'Open the browser menu ⋮, then choose “Add to Home Screen” or “Install app”.',
 
     "L’ensemble blazer Cassandre marron": "Cassandre brown blazer set",
     "Le blazer Cassandre marron perlé": "Cassandre pearl-embellished brown blazer",
