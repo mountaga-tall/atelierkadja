@@ -96,7 +96,7 @@
     'WhatsApp': 'WhatsApp',
     'Maison de Mode Ivoirienne': 'Ivorian Fashion House',
     'Nouveauté': 'New arrival',
-    '01 · Nouveauté': '01 · New arrival',
+
     '04 · La maison': '04 · The House',
     'Des silhouettes conçues comme des pièces fortes': 'Silhouettes designed as statement pieces',
     'Les dernières silhouettes de la maison': "The house's latest silhouettes",

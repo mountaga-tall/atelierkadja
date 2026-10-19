@@ -3799,3 +3799,14 @@ body[data-page="index"] #lewa .editorial-shade::before,
 body[data-page="index"] #caftans .editorial-shade::before{
   display:none;
 }
+
+
+/* Repères couleur : remplacement des marqueurs numériques. */
+.kadja-color-swatches{display:inline-flex;align-items:center;gap:.38rem;vertical-align:middle;margin:.35rem 0 .5rem;}
+.kadja-color-dot{display:inline-block;width:.78rem;height:.78rem;min-width:.78rem;border-radius:50%;background:var(--swatch-color,#FFC857);border:1px solid var(--swatch-border,rgba(255,255,255,.5));box-shadow:0 1px 4px rgba(0,0,0,.12);}
+.editorial-color-kicker{display:inline-flex;align-items:center;gap:.55rem;}
+.editorial-color-kicker .kadja-color-dot{width:.62rem;height:.62rem;min-width:.62rem;}
+.editorial-color-corner{display:flex;align-items:center;justify-content:center;}
+.editorial-color-corner .kadja-color-swatches{margin:0;gap:.28rem;}
+.editorial-color-corner .kadja-color-dot{width:.5rem;height:.5rem;min-width:.5rem;}
+.product-body .kadja-color-swatches{display:flex;width:max-content;}
