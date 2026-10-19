@@ -1,9 +1,14 @@
-const CACHE = 'atelier-kadja-v17';
+const CACHE = 'atelier-kadja-v18-20261019';
 
 const APP_SHELL = [
   "./", "./index.html", "./styles.css", "./script.js", "./manifest.json",
   "./fr/index.html", "./fr/manifest.json",
   "./en/index.html", "./en/manifest.json",
+  "./fr/nouveautes.html", "./en/nouveautes.html",
+  "./fr/blazers.html", "./en/blazers.html",
+  "./fr/robes.html", "./en/robes.html",
+  "./fr/robes-volantes.html", "./en/robes-volantes.html",
+  "./fr/caftans-atypiques.html", "./en/caftans-atypiques.html",
   "./icons/icon-192.png", "./icons/icon-512.png", "./icons/kadja-mark.png",
   "./404.html"
 ];
