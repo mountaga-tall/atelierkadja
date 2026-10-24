@@ -664,7 +664,7 @@ video{
 }
 
 .editorial-media img{
-  object-fit:contain;
+  object-fit:cover;
   background:#11110f;
 }
 
