@@ -3817,3 +3817,14 @@ body[data-page="index"] main .editorial-home .editorial-media img{
   object-fit:cover!important;
   object-position:center!important;
 }
+
+/* Android/mobile fix: keep the NOVELTIES heading fully visible over the homepage video. */
+@media (max-width: 640px) {
+  .editorial-slide-video .editorial-copy h2 {
+    font-size: clamp(2.6rem, 13vw, 4.4rem) !important;
+    line-height: .92 !important;
+    max-width: none !important;
+    white-space: nowrap !important;
+    letter-spacing: -.045em !important;
+  }
+}
