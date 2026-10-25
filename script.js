@@ -582,7 +582,31 @@
   // Autoplay videos — mobile/desktop
   // ---------------------------------------------------------
 
-  const autoplayVideos = $$('video[data-autoplay]');
+  const autoplayVideos = $('video[data-autoplay]');
+
+  // Choose the correct hero video explicitly; source media attributes are not
+  // consistently honored by browsers on <video><source> elements.
+  const responsiveVideoQuery = window.matchMedia('(max-width: 640px)');
+  const configureResponsiveVideo = video => {
+    const mobileSrc = video.dataset.mobileSrc;
+    const desktopSrc = video.dataset.desktopSrc;
+    if (!mobileSrc || !desktopSrc) return false;
+
+    const desiredSrc = responsiveVideoQuery.matches ? mobileSrc : desktopSrc;
+    if (
+      video.dataset.responsiveSource === desiredSrc &&
+      video.getAttribute('src') === desiredSrc
+    ) {
+      return false;
+    }
+
+    video.pause();
+    video.querySelectorAll('source').forEach(source => source.remove());
+    video.dataset.loadRequested = '';
+    video.setAttribute('src', desiredSrc);
+    video.dataset.responsiveSource = desiredSrc;
+    return true;
+  };
 
   const playVideo = video => {
     if (!video || document.hidden) return;
@@ -642,6 +666,8 @@
       video.preload = 'metadata';
     }
 
+    configureResponsiveVideo(video);
+
     // Keep the first visual available while the MP4 is loading.
     if (!video.getAttribute('poster')) {
       video.setAttribute('poster', 'images/CHEMISES, TEE-SHIRTS & TOPS/herot1.webp');
@@ -688,6 +714,20 @@
       observer.observe(video);
     }
   });
+
+  const updateResponsiveVideoSources = () => {
+    autoplayVideos.forEach(video => {
+      if (configureResponsiveVideo(video)) {
+        playVideo(video);
+      }
+    });
+  };
+
+  if (typeof responsiveVideoQuery.addEventListener === 'function') {
+    responsiveVideoQuery.addEventListener('change', updateResponsiveVideoSources);
+  } else if (typeof responsiveVideoQuery.addListener === 'function') {
+    responsiveVideoQuery.addListener(updateResponsiveVideoSources);
+  }
 
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) {
@@ -1804,6 +1844,8 @@
   // ---------------------------------------------------------
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js").catch(() => {});
+      navigator.serviceWorker.register("/sw.js", { updateViaCache: "none" })
+        .then(registration => registration.update())
+        .catch(() => {});
     });
   }
