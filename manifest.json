@@ -28,5 +28,12 @@
   "categories": [
     "shopping",
     "lifestyle"
+  ],
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "/manifest.json",
+      "id": "https://atelierkadja.com/index.html"
+    }
   ]
 }

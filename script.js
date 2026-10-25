@@ -1648,35 +1648,106 @@
   });
 
   // ---------------------------------------------------------
-  // PWA install prompt — desktop, tablet and mobile
+  // PWA install prompt — robust on mobile, tablet and desktop
   // ---------------------------------------------------------
 
+  const displayModes = ['standalone', 'minimal-ui', 'fullscreen'];
   const isStandalone =
-    window.matchMedia('(display-mode: standalone)').matches ||
-    window.matchMedia('(display-mode: minimal-ui)').matches ||
+    displayModes.some(mode => window.matchMedia('(display-mode: ' + mode + ')').matches) ||
     window.navigator.standalone === true;
 
   const isIOS =
     /iphone|ipad|ipod/i.test(navigator.userAgent) ||
-    (
-      navigator.platform === 'MacIntel' &&
-      navigator.maxTouchPoints > 1
-    );
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
   const isAndroid = /android/i.test(navigator.userAgent);
   const isMobile =
     /android|iphone|ipad|ipod/i.test(navigator.userAgent) ||
     navigator.maxTouchPoints > 1;
 
+  const INSTALL_DISMISSED_KEY = 'kadja-install-dismissed-v33';
+  const INSTALLED_APP_KEY = 'kadja-pwa-installed-v33';
+  const isLocalizedAppScope = pathParts[0] === 'fr' || pathParts[0] === 'en';
+  const appScope = isLocalizedAppScope ? '/' + pathParts[0] + '/' : '/';
+  const appManifestPath = isLocalizedAppScope ? appScope + 'manifest.json' : '/manifest.json';
+  const appExpectedStartPath = isLocalizedAppScope ? appScope + 'index.html' : '/index.html';
+
   let deferredInstallPrompt = null;
   let installPromptShown = false;
+  let installedCheckComplete = false;
+  let appAlreadyInstalled = isStandalone;
+  let installBannerTimer = null;
 
-  const wasInstallBannerDismissed = () => {
+  const readStorageFlag = (key) => {
     try {
-      return sessionStorage.getItem('kadja-install-dismissed-v31') === '1';
+      return localStorage.getItem(key) === '1';
     } catch (_) {
       return false;
     }
+  };
+
+  const writeStorageFlag = (key) => {
+    try {
+      localStorage.setItem(key, '1');
+    } catch (_) {}
+  };
+
+  const removeStorageFlag = (key) => {
+    try {
+      localStorage.removeItem(key);
+    } catch (_) {}
+  };
+
+  const wasInstallBannerDismissed = () => {
+    try {
+      return sessionStorage.getItem(INSTALL_DISMISSED_KEY) === '1';
+    } catch (_) {
+      return false;
+    }
+  };
+
+  // Launching from the installed app is definitive, including on iOS.
+  if (isStandalone) writeStorageFlag(INSTALLED_APP_KEY);
+
+  const checkWhetherAppIsInstalled = async () => {
+    if (isStandalone) return true;
+
+    // Chrome/Edge can check an installed PWA when this page is in its scope.
+    // iOS Safari does not implement this API; standalone mode is handled above.
+    if (
+      isLocalizedAppScope &&
+      typeof navigator.getInstalledRelatedApps === 'function'
+    ) {
+      try {
+        const apps = await navigator.getInstalledRelatedApps();
+        const installed = apps.some(app => {
+          if (app.platform !== 'webapp') return false;
+          try {
+            const appUrl = app.url ? new URL(app.url, location.origin) : null;
+            const appId = app.id ? new URL(app.id, location.origin) : null;
+            return (
+              (appUrl && appUrl.pathname === appManifestPath) ||
+              (appId && appId.origin === location.origin &&
+                appId.pathname.replace(/\/$/, '') === appExpectedStartPath.replace(/\/$/, ''))
+            );
+          } catch (_) {
+            return false;
+          }
+        });
+
+        if (installed) {
+          writeStorageFlag(INSTALLED_APP_KEY);
+        } else {
+          // When the browser can verify installation, clear a stale flag.
+          removeStorageFlag(INSTALLED_APP_KEY);
+        }
+        return installed;
+      } catch (_) {
+        // Fall back to the local marker if the API is unavailable or blocked.
+      }
+    }
+
+    return readStorageFlag(INSTALLED_APP_KEY);
   };
 
   const installText = (key) => {
@@ -1720,16 +1791,24 @@
     return installText('generic');
   };
 
-  const createInstallBanner = ({
-    ios = false,
-    fallback = false
-  } = {}) => {
-    if (isStandalone || wasInstallBannerDismissed()) {
-      return null;
+  const closeInstallBanner = (banner, { dismissed = false } = {}) => {
+    if (!banner) return;
+    banner.classList.remove('is-visible');
+    window.setTimeout(() => banner.remove(), 350);
+    if (dismissed) {
+      try {
+        sessionStorage.setItem(INSTALL_DISMISSED_KEY, '1');
+      } catch (_) {}
     }
+  };
 
-    const currentBanner = document.querySelector('.app-install-banner');
-    if (currentBanner) return currentBanner;
+  const createInstallBanner = ({ ios = false, fallback = false } = {}) => {
+    if (
+      appAlreadyInstalled ||
+      isStandalone ||
+      wasInstallBannerDismissed() ||
+      document.querySelector('.app-install-banner')
+    ) return document.querySelector('.app-install-banner') || null;
 
     const banner = document.createElement('aside');
     banner.className = `app-install-banner${ios ? ' app-install-ios' : ''}`;
@@ -1740,116 +1819,70 @@
       <div class="app-install-icon">
         <img src="icons/icon-192.png" alt="Atelier Kadja">
       </div>
-
       <div class="app-install-copy">
         <strong>${installText('title')}</strong>
         <span aria-live="polite">${getInstallHelp(ios)}</span>
       </div>
-
-      <button
-        type="button"
-        class="app-install-button"
-        data-install-app>
+      <button type="button" class="app-install-button" data-install-app>
         ${!ios && deferredInstallPrompt ? installText('install') : (ios || fallback ? installText('howTo') : installText('install'))}
       </button>
-
-      <button
-        type="button"
-        class="app-install-close"
-        aria-label="${installText('close')}">
-        ×
-      </button>
+      <button type="button" class="app-install-close" aria-label="${installText('close')}">×</button>
     `;
 
     document.body.appendChild(banner);
 
-    const close = () => {
-      banner.classList.remove('is-visible');
-
-      window.setTimeout(() => {
-        banner.remove();
-      }, 350);
-
-      try {
-        sessionStorage.setItem('kadja-install-dismissed-v31', '1');
-      } catch (_) {}
-    };
-
-    banner
-      .querySelector('.app-install-close')
-      ?.addEventListener('click', close);
-
-    banner
-      .querySelector('[data-install-app]')
-      ?.addEventListener('click', async () => {
-        if (!ios && deferredInstallPrompt) {
-          const promptEvent = deferredInstallPrompt;
-          deferredInstallPrompt = null;
-
-          try {
-            promptEvent.prompt();
-            const choice = await promptEvent.userChoice;
-            if (choice && choice.outcome === 'accepted') {
-              close();
-              return;
-            }
-          } catch (_) {}
-
-          // The native prompt was dismissed or unavailable. Keep the banner
-          // open and show the correct manual-install steps instead.
-          const helper = banner.querySelector('.app-install-copy span');
-          if (helper) helper.textContent = getInstallHelp(false);
-          const button = banner.querySelector('[data-install-app]');
-          if (button) button.textContent = installText('howTo');
-          return;
-        }
-
-        const helper = banner.querySelector('.app-install-copy span');
-        if (helper) helper.textContent = getInstallHelp(ios);
-        const button = banner.querySelector('[data-install-app]');
-        if (button) button.textContent = installText('howTo');
-      });
-
-    requestAnimationFrame(() => {
-      banner.classList.add('is-visible');
+    banner.querySelector('.app-install-close')?.addEventListener('click', () => {
+      closeInstallBanner(banner, { dismissed: true });
     });
 
+    banner.querySelector('[data-install-app]')?.addEventListener('click', async () => {
+      if (!ios && deferredInstallPrompt) {
+        const promptEvent = deferredInstallPrompt;
+        deferredInstallPrompt = null;
+
+        try {
+          promptEvent.prompt();
+          const choice = await promptEvent.userChoice;
+          if (choice && choice.outcome === 'accepted') {
+            writeStorageFlag(INSTALLED_APP_KEY);
+            closeInstallBanner(banner);
+            return;
+          }
+        } catch (_) {}
+
+        // If the native prompt was dismissed, keep the banner with manual help.
+        const helper = banner.querySelector('.app-install-copy span');
+        if (helper) helper.textContent = getInstallHelp(false);
+        const button = banner.querySelector('[data-install-app]');
+        if (button) button.textContent = installText('howTo');
+        return;
+      }
+
+      const helper = banner.querySelector('.app-install-copy span');
+      if (helper) helper.textContent = getInstallHelp(ios);
+      const button = banner.querySelector('[data-install-app]');
+      if (button) button.textContent = installText('howTo');
+    });
+
+    requestAnimationFrame(() => banner.classList.add('is-visible'));
     installPromptShown = true;
     return banner;
   };
 
-  window.addEventListener('beforeinstallprompt', event => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
+  const scheduleInstallBanner = () => {
+    if (
+      installBannerTimer ||
+      appAlreadyInstalled ||
+      isStandalone ||
+      wasInstallBannerDismissed()
+    ) return;
 
-    if (isStandalone || isIOS || wasInstallBannerDismissed()) return;
-
-    const existingBanner = document.querySelector('.app-install-banner');
-    if (existingBanner) {
-      // The browser prompt can arrive after the fallback banner. Upgrade it
-      // so its button uses the native installation dialog.
-      const helper = existingBanner.querySelector('.app-install-copy span');
-      if (helper) helper.textContent = installText('ready');
-      const button = existingBanner.querySelector('[data-install-app]');
-      if (button) button.textContent = installText('install');
-      return;
-    }
-
-    if (!installPromptShown) createInstallBanner();
-  });
-
-  window.addEventListener('appinstalled', () => {
-    document.querySelector('.app-install-banner')?.remove();
-    deferredInstallPrompt = null;
-    installPromptShown = true;
-  });
-
-  // Show the site-level install invitation on every device type. Browsers
-  // that expose beforeinstallprompt get the native dialog; others get steps.
-  if (!isStandalone && !wasInstallBannerDismissed()) {
-    window.setTimeout(() => {
+    installBannerTimer = window.setTimeout(() => {
+      installBannerTimer = null;
       if (
-        installPromptShown ||
+        !installedCheckComplete ||
+        appAlreadyInstalled ||
+        isStandalone ||
         wasInstallBannerDismissed() ||
         document.querySelector('.app-install-banner')
       ) return;
@@ -1859,7 +1892,59 @@
         fallback: !deferredInstallPrompt && !isIOS
       });
     }, isMobile ? 1100 : 1600);
-  }
+  };
+
+  window.addEventListener('beforeinstallprompt', event => {
+    // Keep the native browser prompt for the visible Install button.
+    event.preventDefault();
+    deferredInstallPrompt = event;
+
+    if (
+      !installedCheckComplete ||
+      appAlreadyInstalled ||
+      isStandalone ||
+      wasInstallBannerDismissed()
+    ) return;
+
+    const existingBanner = document.querySelector('.app-install-banner');
+    if (existingBanner) {
+      const helper = existingBanner.querySelector('.app-install-copy span');
+      if (helper) helper.textContent = installText('ready');
+      const button = existingBanner.querySelector('[data-install-app]');
+      if (button) button.textContent = installText('install');
+    } else {
+      scheduleInstallBanner();
+    }
+  });
+
+  window.addEventListener('appinstalled', () => {
+    appAlreadyInstalled = true;
+    writeStorageFlag(INSTALLED_APP_KEY);
+    const banner = document.querySelector('.app-install-banner');
+    if (banner) closeInstallBanner(banner);
+    deferredInstallPrompt = null;
+    installPromptShown = true;
+  });
+
+  // Wait for installation detection before showing anything; this avoids a
+  // visible popup on devices where the app is already installed.
+  checkWhetherAppIsInstalled().then(installed => {
+    appAlreadyInstalled = installed || isStandalone;
+    installedCheckComplete = true;
+
+    if (appAlreadyInstalled) {
+      const banner = document.querySelector('.app-install-banner');
+      banner?.remove();
+      installPromptShown = true;
+      return;
+    }
+
+    scheduleInstallBanner();
+  }).catch(() => {
+    installedCheckComplete = true;
+    appAlreadyInstalled = isStandalone;
+    if (!appAlreadyInstalled) scheduleInstallBanner();
+  });
 
   // ---------------------------------------------------------
   // Generic anchor scrolling

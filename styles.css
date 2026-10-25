@@ -3453,7 +3453,7 @@ body.lightbox-open{
   }
 
   .app-install-banner{
-    bottom:68px;
+    bottom:calc(68px + env(safe-area-inset-bottom, 0px));
     width:calc(100% - 20px);
     grid-template-columns:auto minmax(0,1fr) auto;
     padding:10px;

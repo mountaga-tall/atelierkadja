@@ -22,5 +22,13 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
+  ],
+  "id": "https://atelierkadja.com/fr/index.html",
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "/fr/manifest.json",
+      "id": "https://atelierkadja.com/fr/index.html"
+    }
   ]
 }
