@@ -1673,7 +1673,7 @@
 
   const wasInstallBannerDismissed = () => {
     try {
-      return sessionStorage.getItem('kadja-install-dismissed') === '1';
+      return sessionStorage.getItem('kadja-install-dismissed-v31') === '1';
     } catch (_) {
       return false;
     }
@@ -1771,7 +1771,7 @@
       }, 350);
 
       try {
-        sessionStorage.setItem('kadja-install-dismissed', '1');
+        sessionStorage.setItem('kadja-install-dismissed-v31', '1');
       } catch (_) {}
     };
 
