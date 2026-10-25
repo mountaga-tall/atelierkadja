@@ -1,4 +1,4 @@
-const CACHE = 'atelier-kadja-v24-20261025';
+const CACHE = 'atelier-kadja-v25-20261025';
 
 const APP_SHELL = [
   "./", "./index.html", "./styles.css", "./script.js", "./manifest.json",
