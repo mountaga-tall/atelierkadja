@@ -2395,7 +2395,7 @@ body.lightbox-open{
   z-index:10001;
   width:min(640px,calc(100% - 24px));
   display:grid;
-  grid-template-columns:auto minmax(0,1fr) auto;
+  grid-template-columns:auto minmax(0,1fr) auto auto;
   align-items:center;
   gap:12px;
   padding:12px 14px;
