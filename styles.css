@@ -3810,3 +3810,10 @@ body[data-page="index"] #caftans .editorial-shade::before{
 .editorial-color-corner .kadja-color-swatches{margin:0;gap:.28rem;}
 .editorial-color-corner .kadja-color-dot{width:.5rem;height:.5rem;min-width:.5rem;}
 .product-body .kadja-color-swatches{display:flex;width:max-content;}
+
+
+/* Fix mobile/desktop homepage hero letterboxing. Override the global no-crop rule for the large editorial slides only. */
+body[data-page="index"] main .editorial-home .editorial-media img{
+  object-fit:cover!important;
+  object-position:center!important;
+}
