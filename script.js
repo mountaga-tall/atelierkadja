@@ -1648,11 +1648,12 @@
   });
 
   // ---------------------------------------------------------
-  // PWA install prompt
+  // PWA install prompt — desktop, tablet and mobile
   // ---------------------------------------------------------
 
   const isStandalone =
     window.matchMedia('(display-mode: standalone)').matches ||
+    window.matchMedia('(display-mode: minimal-ui)').matches ||
     window.navigator.standalone === true;
 
   const isIOS =
@@ -1662,6 +1663,7 @@
       navigator.maxTouchPoints > 1
     );
 
+  const isAndroid = /android/i.test(navigator.userAgent);
   const isMobile =
     /android|iphone|ipad|ipod/i.test(navigator.userAgent) ||
     navigator.maxTouchPoints > 1;
@@ -1669,52 +1671,92 @@
   let deferredInstallPrompt = null;
   let installPromptShown = false;
 
+  const wasInstallBannerDismissed = () => {
+    try {
+      return sessionStorage.getItem('kadja-install-dismissed') === '1';
+    } catch (_) {
+      return false;
+    }
+  };
+
+  const installText = (key) => {
+    const text = {
+      title: {
+        fr: "Installer l’app Atelier Kadja",
+        en: "Install the Atelier Kadja app"
+      },
+      install: { fr: "Installer", en: "Install" },
+      howTo: { fr: "Comment faire", en: "How to install" },
+      close: { fr: "Fermer", en: "Close" },
+      ready: {
+        fr: "Appuyez sur « Installer » pour ajouter l’application à votre appareil.",
+        en: "Select “Install” to add the app to your device."
+      },
+      ios: {
+        fr: "Sur iPhone/iPad : touchez Partager, puis « Sur l’écran d’accueil » ou « Ajouter à l’écran d’accueil ».",
+        en: "On iPhone/iPad: tap Share, then “Add to Home Screen”."
+      },
+      android: {
+        fr: "Sur Android : ouvrez le menu ⋮ du navigateur, puis choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ».",
+        en: "On Android: open the browser menu ⋮, then choose “Install app” or “Add to Home screen”."
+      },
+      desktop: {
+        fr: "Sur ordinateur : utilisez l’icône Installer dans la barre d’adresse ou le menu du navigateur. Chrome/Edge : « Installer Atelier Kadja » ; Safari sur Mac : Fichier > Ajouter au Dock.",
+        en: "On a computer: use the Install icon in the address bar or browser menu. Chrome/Edge: “Install Atelier Kadja”; Safari on Mac: File > Add to Dock."
+      },
+      generic: {
+        fr: "Ouvrez le menu du navigateur, puis choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil », si cette option est disponible.",
+        en: "Open your browser menu and select “Install app” or “Add to Home screen”, if available."
+      }
+    };
+    return text[key][locale === 'en' ? 'en' : 'fr'];
+  };
+
+  const getInstallHelp = (ios = isIOS) => {
+    if (ios) return installText('ios');
+    if (deferredInstallPrompt) return installText('ready');
+    if (isAndroid) return installText('android');
+    if (!isMobile) return installText('desktop');
+    return installText('generic');
+  };
+
   const createInstallBanner = ({
     ios = false,
     fallback = false
   } = {}) => {
-    if (
-      !isMobile ||
-      isStandalone ||
-      document.querySelector('.app-install-banner')
-    ) {
+    if (isStandalone || wasInstallBannerDismissed()) {
       return null;
     }
 
+    const currentBanner = document.querySelector('.app-install-banner');
+    if (currentBanner) return currentBanner;
+
     const banner = document.createElement('aside');
-    banner.className =
-      `app-install-banner${ios ? ' app-install-ios' : ''}`;
-
+    banner.className = `app-install-banner${ios ? ' app-install-ios' : ''}`;
     banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', 'Installer Atelier Kadja');
-
-    const helper = ios
-      ? '<span>Sur iPhone/iPad : touchez <strong>Partager</strong>, puis <strong>Ajouter à l’écran d’accueil</strong>.</span>'
-      : fallback
-        ? '<span>Ajoutez Atelier Kadja à votre écran d’accueil depuis le menu du navigateur.</span>'
-        : '<span>Accédez au catalogue depuis votre écran d’accueil.</span>';
+    banner.setAttribute('aria-label', installText('title'));
 
     banner.innerHTML = `
       <div class="app-install-icon">
-        <img src="icons/icon-192.png" alt="Logo Atelier Kadja">
+        <img src="icons/icon-192.png" alt="Atelier Kadja">
       </div>
 
       <div class="app-install-copy">
-        <strong>Installer l’app Atelier Kadja</strong>
-        ${helper}
+        <strong>${installText('title')}</strong>
+        <span aria-live="polite">${getInstallHelp(ios)}</span>
       </div>
 
       <button
         type="button"
         class="app-install-button"
         data-install-app>
-        ${ios || fallback ? 'Comment faire' : 'Installer'}
+        ${!ios && deferredInstallPrompt ? installText('install') : (ios || fallback ? installText('howTo') : installText('install'))}
       </button>
 
       <button
         type="button"
         class="app-install-close"
-        aria-label="${locale === 'en' ? 'Close' : 'Fermer'}">
+        aria-label="${installText('close')}">
         ×
       </button>
     `;
@@ -1729,10 +1771,7 @@
       }, 350);
 
       try {
-        sessionStorage.setItem(
-          'kadja-install-dismissed',
-          '1'
-        );
+        sessionStorage.setItem('kadja-install-dismissed', '1');
       } catch (_) {}
     };
 
@@ -1743,29 +1782,32 @@
     banner
       .querySelector('[data-install-app]')
       ?.addEventListener('click', async () => {
-        if (!ios && !fallback && deferredInstallPrompt) {
-          deferredInstallPrompt.prompt();
+        if (!ios && deferredInstallPrompt) {
+          const promptEvent = deferredInstallPrompt;
+          deferredInstallPrompt = null;
 
           try {
-            await deferredInstallPrompt.userChoice;
+            promptEvent.prompt();
+            const choice = await promptEvent.userChoice;
+            if (choice && choice.outcome === 'accepted') {
+              close();
+              return;
+            }
           } catch (_) {}
 
-          deferredInstallPrompt = null;
-          close();
+          // The native prompt was dismissed or unavailable. Keep the banner
+          // open and show the correct manual-install steps instead.
+          const helper = banner.querySelector('.app-install-copy span');
+          if (helper) helper.textContent = getInstallHelp(false);
+          const button = banner.querySelector('[data-install-app]');
+          if (button) button.textContent = installText('howTo');
           return;
         }
 
-        if (ios) {
-          banner
-            .querySelector('.app-install-copy span')
-            .innerHTML =
-              'Sur iPhone/iPad : touchez <strong>Partager</strong> <strong>▢↑</strong>, puis <strong>Ajouter à l’écran d’accueil</strong>.';
-        } else {
-          banner
-            .querySelector('.app-install-copy span')
-            .textContent =
-              'Ouvrez le menu ⋮ du navigateur, puis choisissez « Ajouter à l’écran d’accueil » ou « Installer l’application ».';
-        }
+        const helper = banner.querySelector('.app-install-copy span');
+        if (helper) helper.textContent = getInstallHelp(ios);
+        const button = banner.querySelector('[data-install-app]');
+        if (button) button.textContent = installText('howTo');
       });
 
     requestAnimationFrame(() => {
@@ -1780,40 +1822,43 @@
     event.preventDefault();
     deferredInstallPrompt = event;
 
-    if (
-      !installPromptShown &&
-      !isStandalone &&
-      isMobile
-    ) {
-      createInstallBanner();
+    if (isStandalone || isIOS || wasInstallBannerDismissed()) return;
+
+    const existingBanner = document.querySelector('.app-install-banner');
+    if (existingBanner) {
+      // The browser prompt can arrive after the fallback banner. Upgrade it
+      // so its button uses the native installation dialog.
+      const helper = existingBanner.querySelector('.app-install-copy span');
+      if (helper) helper.textContent = installText('ready');
+      const button = existingBanner.querySelector('[data-install-app]');
+      if (button) button.textContent = installText('install');
+      return;
     }
+
+    if (!installPromptShown) createInstallBanner();
   });
 
   window.addEventListener('appinstalled', () => {
-    const banner = document.querySelector('.app-install-banner');
-    banner?.remove();
+    document.querySelector('.app-install-banner')?.remove();
     deferredInstallPrompt = null;
+    installPromptShown = true;
   });
 
-  if (isMobile && !isStandalone) {
-    let dismissed = false;
+  // Show the site-level install invitation on every device type. Browsers
+  // that expose beforeinstallprompt get the native dialog; others get steps.
+  if (!isStandalone && !wasInstallBannerDismissed()) {
+    window.setTimeout(() => {
+      if (
+        installPromptShown ||
+        wasInstallBannerDismissed() ||
+        document.querySelector('.app-install-banner')
+      ) return;
 
-    try {
-      dismissed =
-        sessionStorage.getItem('kadja-install-dismissed') === '1';
-    } catch (_) {}
-
-    if (!dismissed) {
-      window.setTimeout(() => {
-        if (installPromptShown) return;
-
-        if (isIOS) {
-          createInstallBanner({ ios: true });
-        } else if (!deferredInstallPrompt) {
-          createInstallBanner({ fallback: true });
-        }
-      }, 1100);
-    }
+      createInstallBanner({
+        ios: isIOS,
+        fallback: !deferredInstallPrompt && !isIOS
+      });
+    }, isMobile ? 1100 : 1600);
   }
 
   // ---------------------------------------------------------
