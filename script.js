@@ -1804,8 +1804,6 @@
 
   const createInstallBanner = ({ ios = false, fallback = false } = {}) => {
     if (
-      appAlreadyInstalled ||
-      isStandalone ||
       wasInstallBannerDismissed() ||
       document.querySelector('.app-install-banner')
     ) return document.querySelector('.app-install-banner') || null;
@@ -1872,8 +1870,6 @@
   const scheduleInstallBanner = () => {
     if (
       installBannerTimer ||
-      appAlreadyInstalled ||
-      isStandalone ||
       wasInstallBannerDismissed()
     ) return;
 
@@ -1881,8 +1877,6 @@
       installBannerTimer = null;
       if (
         !installedCheckComplete ||
-        appAlreadyInstalled ||
-        isStandalone ||
         wasInstallBannerDismissed() ||
         document.querySelector('.app-install-banner')
       ) return;
@@ -1901,8 +1895,6 @@
 
     if (
       !installedCheckComplete ||
-      appAlreadyInstalled ||
-      isStandalone ||
       wasInstallBannerDismissed()
     ) return;
 
@@ -1920,30 +1912,21 @@
   window.addEventListener('appinstalled', () => {
     appAlreadyInstalled = true;
     writeStorageFlag(INSTALLED_APP_KEY);
-    const banner = document.querySelector('.app-install-banner');
-    if (banner) closeInstallBanner(banner);
     deferredInstallPrompt = null;
     installPromptShown = true;
+    // Keep the help banner visible; the user can close it with ×.
   });
 
-  // Wait for installation detection before showing anything; this avoids a
-  // visible popup on devices where the app is already installed.
+  // Always show the install/help banner, even when the app is already installed.
+  // The user controls visibility with the × close button.
   checkWhetherAppIsInstalled().then(installed => {
     appAlreadyInstalled = installed || isStandalone;
     installedCheckComplete = true;
-
-    if (appAlreadyInstalled) {
-      const banner = document.querySelector('.app-install-banner');
-      banner?.remove();
-      installPromptShown = true;
-      return;
-    }
-
     scheduleInstallBanner();
   }).catch(() => {
     installedCheckComplete = true;
     appAlreadyInstalled = isStandalone;
-    if (!appAlreadyInstalled) scheduleInstallBanner();
+    scheduleInstallBanner();
   });
 
   // ---------------------------------------------------------
