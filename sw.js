@@ -1,4 +1,4 @@
-const CACHE = 'atelier-kadja-v33-20261025-install-detection';
+const CACHE = 'atelier-kadja-v34-20261031-premium-install-modal';
 
 const APP_SHELL = [
   "./", "./index.html", "./styles.css", "./script.js", "./manifest.json",
