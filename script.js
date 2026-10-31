@@ -1665,8 +1665,8 @@
     /android|iphone|ipad|ipod/i.test(navigator.userAgent) ||
     navigator.maxTouchPoints > 1;
 
-  const INSTALL_DISMISSED_KEY = 'kadja-install-dismissed-v33';
-  const INSTALLED_APP_KEY = 'kadja-pwa-installed-v33';
+  const INSTALL_DISMISSED_KEY = 'kadja-install-dismissed-v34';
+  const INSTALLED_APP_KEY = 'kadja-pwa-installed-v34';
   const isLocalizedAppScope = pathParts[0] === 'fr' || pathParts[0] === 'en';
   const appScope = isLocalizedAppScope ? '/' + pathParts[0] + '/' : '/';
   const appManifestPath = isLocalizedAppScope ? appScope + 'manifest.json' : '/manifest.json';
@@ -1794,7 +1794,11 @@
   const closeInstallBanner = (banner, { dismissed = false } = {}) => {
     if (!banner) return;
     banner.classList.remove('is-visible');
-    window.setTimeout(() => banner.remove(), 350);
+    document.body.classList.remove('app-install-open');
+    if (banner._handleEscape) {
+      document.removeEventListener('keydown', banner._handleEscape);
+    }
+    window.setTimeout(() => banner.remove(), 320);
     if (dismissed) {
       try {
         sessionStorage.setItem(INSTALL_DISMISSED_KEY, '1');
@@ -1808,30 +1812,81 @@
       document.querySelector('.app-install-banner')
     ) return document.querySelector('.app-install-banner') || null;
 
-    const banner = document.createElement('aside');
-    banner.className = `app-install-banner${ios ? ' app-install-ios' : ''}`;
-    banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', installText('title'));
+    const copy = locale === 'en' ? {
+      eyebrow: 'ATELIER KADJA · YOUR EXPERIENCE',
+      heading: 'Atelier Kadja, always within reach.',
+      intro: 'Add our world to your home screen and find your next favorite look in one tap.',
+      iosSteps: [
+        ['01', 'Open Safari', 'Visit atelierkadja.com in Safari on your iPhone.'],
+        ['02', 'Tap Share', 'Use the square-and-arrow icon at the bottom of the screen.'],
+        ['03', 'Add to Home Screen', 'Choose “Add to Home Screen”, then tap “Add”.']
+      ],
+      button: 'Got it',
+      footer: 'Your Kadja experience, right on your home screen.',
+      androidSteps: 'Open your browser menu and choose “Install app” or “Add to Home screen”.'
+    } : {
+      eyebrow: 'ATELIER KADJA · VOTRE EXPÉRIENCE',
+      heading: 'Atelier Kadja, toujours à portée de main.',
+      intro: 'Retrouvez notre univers et vos prochaines pièces coups de cœur directement depuis votre écran d’accueil.',
+      iosSteps: [
+        ['01', 'Ouvrez Safari', 'Accédez à atelierkadja.com dans Safari sur votre iPhone.'],
+        ['02', 'Touchez Partager', 'L’icône carré avec la flèche vers le haut, en bas de l’écran.'],
+        ['03', 'Ajouter à l’écran d’accueil', 'Choisissez cette option, puis touchez « Ajouter ».']
+      ],
+      button: 'J’ai compris',
+      footer: 'Votre univers Kadja, comme une vraie application.',
+      androidSteps: 'Ouvrez le menu du navigateur, puis choisissez « Installer l’application » ou « Ajouter à l’écran d’accueil ».'
+    };
 
-    banner.innerHTML = `
-      <div class="app-install-icon">
-        <img src="icons/icon-192.png" alt="Atelier Kadja">
-      </div>
-      <div class="app-install-copy">
-        <strong>${installText('title')}</strong>
-        <span aria-live="polite">${getInstallHelp(ios)}</span>
-      </div>
-      <button type="button" class="app-install-button" data-install-app>
-        ${!ios && deferredInstallPrompt ? installText('install') : (ios || fallback ? installText('howTo') : installText('install'))}
-      </button>
-      <button type="button" class="app-install-close" aria-label="${installText('close')}">×</button>
-    `;
+    const stepsHtml = ios
+      ? '<ol class="app-install-steps">' + copy.iosSteps.map(step =>
+          '<li><span class="app-install-step-number">' + step[0] + '</span><span class="app-install-step-copy"><strong>' + step[1] + '</strong><small>' + step[2] + '</small></span></li>'
+        ).join('') + '</ol>'
+      : '<div class="app-install-platform-help">' + (deferredInstallPrompt
+          ? installText('ready')
+          : (isAndroid ? copy.androidSteps : getInstallHelp(false))) + '</div>';
+
+    const banner = document.createElement('div');
+    banner.className = 'app-install-banner app-install-overlay' + (ios ? ' app-install-ios' : '');
+    banner.setAttribute('role', 'dialog');
+    banner.setAttribute('aria-modal', 'true');
+    banner.setAttribute('aria-label', installText('title'));
+    banner.setAttribute('tabindex', '-1');
+
+    banner.innerHTML =
+      '<section class="app-install-modal">' +
+        '<button type="button" class="app-install-close" aria-label="' + installText('close') + '">×</button>' +
+        '<div class="app-install-modal-brand">' +
+          '<div class="app-install-icon"><img src="/icons/icon-192.png" alt="Atelier Kadja"></div>' +
+          '<span class="app-install-eyebrow">' + copy.eyebrow + '</span>' +
+        '</div>' +
+        '<div class="app-install-modal-sparkle" aria-hidden="true">✦</div>' +
+        '<h2>' + copy.heading + '</h2>' +
+        '<p class="app-install-modal-intro">' + copy.intro + '</p>' +
+        (ios ? '<p class="app-install-modal-label">' + (locale === 'en' ? 'INSTALL IN 3 SIMPLE STEPS' : 'INSTALLATION EN 3 GESTES') + '</p>' : '') +
+        '<div class="app-install-copy"><span aria-live="polite">' + getInstallHelp(ios) + '</span></div>' +
+        stepsHtml +
+        '<button type="button" class="app-install-button" data-install-app>' +
+          (!ios && deferredInstallPrompt ? installText('install') : copy.button) +
+        '</button>' +
+        '<p class="app-install-modal-footer">' + copy.footer + '</p>' +
+      '</section>';
 
     document.body.appendChild(banner);
+    document.body.classList.add('app-install-open');
 
     banner.querySelector('.app-install-close')?.addEventListener('click', () => {
       closeInstallBanner(banner, { dismissed: true });
     });
+
+    banner.addEventListener('click', event => {
+      if (event.target === banner) closeInstallBanner(banner, { dismissed: true });
+    });
+
+    banner._handleEscape = event => {
+      if (event.key === 'Escape') closeInstallBanner(banner, { dismissed: true });
+    };
+    document.addEventListener('keydown', banner._handleEscape);
 
     banner.querySelector('[data-install-app]')?.addEventListener('click', async () => {
       if (!ios && deferredInstallPrompt) {
@@ -1843,26 +1898,25 @@
           const choice = await promptEvent.userChoice;
           if (choice && choice.outcome === 'accepted') {
             writeStorageFlag(INSTALLED_APP_KEY);
-            closeInstallBanner(banner);
+            closeInstallBanner(banner, { dismissed: true });
             return;
           }
         } catch (_) {}
 
-        // If the native prompt was dismissed, keep the banner with manual help.
         const helper = banner.querySelector('.app-install-copy span');
         if (helper) helper.textContent = getInstallHelp(false);
         const button = banner.querySelector('[data-install-app]');
-        if (button) button.textContent = installText('howTo');
+        if (button) button.textContent = copy.button;
         return;
       }
 
-      const helper = banner.querySelector('.app-install-copy span');
-      if (helper) helper.textContent = getInstallHelp(ios);
-      const button = banner.querySelector('[data-install-app]');
-      if (button) button.textContent = installText('howTo');
+      closeInstallBanner(banner, { dismissed: true });
     });
 
-    requestAnimationFrame(() => banner.classList.add('is-visible'));
+    requestAnimationFrame(() => {
+      banner.classList.add('is-visible');
+      banner.querySelector('[data-install-app]')?.focus();
+    });
     installPromptShown = true;
     return banner;
   };
@@ -1885,7 +1939,7 @@
         ios: isIOS,
         fallback: !deferredInstallPrompt && !isIOS
       });
-    }, isMobile ? 1100 : 1600);
+    }, isMobile ? 850 : 1400);
   };
 
   window.addEventListener('beforeinstallprompt', event => {
@@ -1917,17 +1971,23 @@
     // Keep the help banner visible; the user can close it with ×.
   });
 
-  // Always show the install/help banner, even when the app is already installed.
+  // On iOS, do not wait for an installation-detection API: Safari does not
+  // expose one. Show the manual Add to Home Screen guide independently.
   // The user controls visibility with the × close button.
-  checkWhetherAppIsInstalled().then(installed => {
-    appAlreadyInstalled = installed || isStandalone;
+  if (isIOS) {
     installedCheckComplete = true;
     scheduleInstallBanner();
-  }).catch(() => {
-    installedCheckComplete = true;
-    appAlreadyInstalled = isStandalone;
-    scheduleInstallBanner();
-  });
+  } else {
+    checkWhetherAppIsInstalled().then(installed => {
+      appAlreadyInstalled = installed || isStandalone;
+      installedCheckComplete = true;
+      scheduleInstallBanner();
+    }).catch(() => {
+      installedCheckComplete = true;
+      appAlreadyInstalled = isStandalone;
+      scheduleInstallBanner();
+    });
+  }
 
   // ---------------------------------------------------------
   // Generic anchor scrolling
