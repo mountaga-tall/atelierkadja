@@ -13,8 +13,8 @@ SKIP_SCHEMES = ("mailto:", "tel:", "javascript:", "data:")
 HREF_RE = re.compile(r'href=["\']([^"\']+)', re.I)
 SRC_RE = re.compile(r'(?:src|poster|data-gallery-src)=["\']([^"\']+)', re.I)
 ATTR_RE = re.compile(r'\b(?:alt|aria-label|title|placeholder)=["\']([^"\']*)', re.I)
-META_TEXT_RE = re.compile(r'<meta\\b[^>]*>', re.I)
-META_TEXT_KEYS = re.compile(r'\\b(?:name|property)=["\'](?:description|og:title|twitter:title)["\']', re.I)
+META_TEXT_RE = re.compile(r'<meta\b[^>]*>', re.I)
+META_TEXT_KEYS = re.compile(r'\b(?:name|property)=["\'](?:description|og:title|twitter:title)["\']', re.I)
 LANG_RE = re.compile(r'<html\b[^>]*\blang=["\']([^"\']+)', re.I)
 BASE_RE = re.compile(r'<base\s+href=["\']([^"\']+)', re.I)
 ID_RE = re.compile(r'\bid=["\']([^"\']+)', re.I)
@@ -70,7 +70,7 @@ def user_content(text: str) -> str:
     metadata = []
     for tag in META_TEXT_RE.findall(stripped):
         if META_TEXT_KEYS.search(tag):
-            match = re.search(r'\\bcontent=["\']([^"\']*)', tag, re.I)
+            match = re.search(r'\bcontent=["\']([^"\']*)', tag, re.I)
             if match:
                 metadata.append(match.group(1))
     return unescape(body + " " + attrs + " " + " ".join(metadata))
