@@ -1848,6 +1848,8 @@
 
   const createInstallBanner = ({ ios = false, fallback = false } = {}) => {
     if (
+      appAlreadyInstalled ||
+      isStandalone ||
       wasInstallBannerDismissed() ||
       document.querySelector('.app-install-banner')
     ) return document.querySelector('.app-install-banner') || null;
@@ -1897,7 +1899,7 @@
       '<section class="app-install-modal">' +
         '<button type="button" class="app-install-close" aria-label="' + installText('close') + '">×</button>' +
         '<div class="app-install-modal-brand">' +
-          '<div class="app-install-icon"><img src="/icons/icon-192.png" alt="Atelier Kadja"></div>' +
+          '<div class="app-install-icon"><img src="/icons/icon-192.svg" alt="Atelier Kadja"></div>' +
           '<span class="app-install-eyebrow">' + copy.eyebrow + '</span>' +
         '</div>' +
         '<div class="app-install-modal-sparkle" aria-hidden="true">✦</div>' +
@@ -1937,8 +1939,9 @@
           promptEvent.prompt();
           const choice = await promptEvent.userChoice;
           if (choice && choice.outcome === 'accepted') {
+            appAlreadyInstalled = true;
             writeStorageFlag(INSTALLED_APP_KEY);
-            closeInstallBanner(banner, { dismissed: true });
+            closeInstallBanner(banner);
             return;
           }
         } catch (_) {}
@@ -1963,6 +1966,8 @@
 
   const scheduleInstallBanner = () => {
     if (
+      appAlreadyInstalled ||
+      isStandalone ||
       installBannerTimer ||
       wasInstallBannerDismissed()
     ) return;
@@ -1971,6 +1976,8 @@
       installBannerTimer = null;
       if (
         !installedCheckComplete ||
+        appAlreadyInstalled ||
+        isStandalone ||
         wasInstallBannerDismissed() ||
         document.querySelector('.app-install-banner')
       ) return;
@@ -2008,7 +2015,8 @@
     writeStorageFlag(INSTALLED_APP_KEY);
     deferredInstallPrompt = null;
     installPromptShown = true;
-    // Keep the help banner visible; the user can close it with ×.
+    const banner = document.querySelector('.app-install-banner');
+    if (banner) closeInstallBanner(banner);
   });
 
   // On iOS, do not wait for an installation-detection API: Safari does not
