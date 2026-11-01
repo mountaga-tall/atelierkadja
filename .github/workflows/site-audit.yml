@@ -49,6 +49,8 @@ jobs:
 
           svg = ET.parse(root / "icons/icon-192.svg").getroot()
           assert svg.attrib.get("width") == "192" and svg.attrib.get("height") == "192", "icon-192.svg dimensions are incorrect"
+          svg512 = ET.parse(root / "icons/icon-512.svg").getroot()
+          assert svg512.attrib.get("width") == "512" and svg512.attrib.get("height") == "512", "icon-512.svg dimensions are incorrect"
 
           sitemap = ET.parse(root / "sitemap.xml").getroot()
           ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}

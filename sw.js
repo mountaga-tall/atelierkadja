@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'atelier-kadja-v35-20261101-stable-cache';
+const CACHE = 'atelier-kadja-v36-20261101-cream-icons';
 
 const APP_SHELL = [
   './',
@@ -26,6 +26,7 @@ const APP_SHELL = [
   './images/NOUVEAUTÉS/cassmarper.webp',
   './icons/icon-192.png',
   './icons/icon-192.svg',
+  './icons/icon-512.svg',
   './icons/icon-512.png',
   './icons/kadja-mark.png',
   './404.html'

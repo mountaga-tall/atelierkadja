@@ -39,7 +39,7 @@ Le service worker utilise un nom de cache versionné. Il :
 - ne détourne pas les requêtes vidéo ou byte-range ;
 - supprime uniquement les anciens caches Atelier Kadja.
 
-Le manifeste principal et les manifestes FR/EN doivent déclarer les dimensions réelles des icônes. `icons/kadja-mark.png` est une source carrée de 512 × 512 pixels.
+Le manifeste principal et les manifestes FR/EN doivent déclarer les dimensions réelles des icônes. `icons/kadja-mark.png` est une source carrée de 512 × 512 pixels. Les manifestes utilisent des enveloppes SVG 192 × 192 et 512 × 512 avec un fond ivoire pour garantir un rendu lisible sur les écrans d'accueil.
 
 ## SEO et publication
 
