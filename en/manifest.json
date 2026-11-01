@@ -1,11 +1,11 @@
 {
-  "name": "Atelier Kadja — Ivorian Fashion House",
+  "name": "Atelier Kadja — Maison de Mode Ivoirienne",
   "short_name": "Atelier Kadja",
-  "description": "Ivorian fashion house in Abidjan — catalog, collections and made-to-measure creations.",
-  "lang": "en",
+  "description": "Maison de mode ivoirienne à Abidjan — catalogue, collections et créations sur mesure.",
+  "lang": "fr",
   "dir": "ltr",
-  "start_url": "/en/index.html",
-  "scope": "/en/",
+  "start_url": "/fr/index.html",
+  "scope": "/",
   "display": "standalone",
   "theme_color": "#111111",
   "background_color": "#f9f8f6",
@@ -17,9 +17,9 @@
       "purpose": "any"
     },
     {
-      "src": "/icons/icon-512.svg",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ],
