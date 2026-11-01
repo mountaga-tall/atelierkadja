@@ -623,7 +623,7 @@
   // ---------------------------------------------------------
 
   // Select every autoplay video: this collection is iterated by the handlers below.
-  const autoplayVideos = $('video[data-autoplay]');
+  const autoplayVideos = $$('video[data-autoplay]');
 
   // Choose the correct hero video explicitly; source media attributes are not
   // consistently honored by browsers on <video><source> elements.
