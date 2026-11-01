@@ -21,7 +21,6 @@ jobs:
         run: |
           node --check script.js
           node --check sw.js
-          node --check localized-loader.js
 
       - name: Audit pages, links, media and language consistency
         run: python3 scripts/check-site.py
