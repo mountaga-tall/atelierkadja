@@ -622,6 +622,7 @@
   // Autoplay videos — mobile/desktop
   // ---------------------------------------------------------
 
+  // Select every autoplay video: this collection is iterated by the handlers below.
   const autoplayVideos = $('video[data-autoplay]');
 
   // Choose the correct hero video explicitly; source media attributes are not

@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'atelier-kadja-v39-20261101-video-controls-fix';
+const CACHE = 'atelier-kadja-v40-20261101-video-controls-hotfix';
 
 const APP_SHELL = [
   './',
