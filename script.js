@@ -823,7 +823,15 @@
 
       if (editorialVideo.paused) {
         delete editorialVideo.dataset.userPaused;
-        playVideo(editorialVideo);
+        // Call play() directly inside the trusted click event. The generic
+        // autoplay helper may wait for loadeddata, which loses mobile
+        // browser user activation and makes the control appear unresponsive.
+        const playback = editorialVideo.play();
+        if (playback && typeof playback.catch === 'function') {
+          playback.catch(() => {
+            refreshEditorialControls();
+          });
+        }
       } else {
         editorialVideo.dataset.userPaused = 'true';
         editorialVideo.pause();

@@ -4082,13 +4082,25 @@ summary:focus-visible{
 /* Homepage editorial video controls — independent from the clickable image link. */
 .editorial-video-controls{
   position:absolute;
-  z-index:24;
+  z-index:40;
   top:clamp(100px,14vh,138px);
-  right:clamp(18px,3vw,38px);
+  left:clamp(18px,3vw,38px);
+  right:auto;
   display:flex;
   align-items:center;
   gap:10px;
   pointer-events:auto;
+  isolation:isolate;
+}
+
+.editorial-video-controls,
+.editorial-video-controls *{
+  pointer-events:auto;
+}
+
+.editorial-video-control{
+  position:relative;
+  z-index:1;
 }
 
 .editorial-video-control{
@@ -4134,7 +4146,8 @@ summary:focus-visible{
 @media (max-width:900px){
   .editorial-video-controls{
     top:calc(env(safe-area-inset-top,0px) + 94px);
-    right:16px;
+    left:16px;
+    right:auto;
     gap:8px;
   }
   .editorial-video-control{
@@ -4149,7 +4162,8 @@ summary:focus-visible{
 
 @media (max-width:380px){
   .editorial-video-controls{
-    right:12px;
+    left:12px;
+    right:auto;
     gap:7px;
   }
   .editorial-video-control{
