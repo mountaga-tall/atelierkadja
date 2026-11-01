@@ -1,13 +1,12 @@
 'use strict';
 
-const CACHE = 'atelier-kadja-v42-20261101-pwa-fr-icon-optimization';
+const CACHE = 'atelier-kadja-v43-20261101-orphan-cleanup';
 
 const APP_SHELL = [
   './',
   './index.html',
   './styles.css',
   './script.js',
-  './localized-loader.js',
   './manifest.json',
   './fr/index.html',
   './fr/manifest.json',
