@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'atelier-kadja-v37-20261101-install-guard';
+const CACHE = 'atelier-kadja-v38-20261101-editorial-controls';
 
 const APP_SHELL = [
   './',

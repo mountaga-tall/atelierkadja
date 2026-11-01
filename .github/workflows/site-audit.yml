@@ -47,6 +47,13 @@ jobs:
           assert "if (banner) closeInstallBanner(banner);" in script, "appinstalled does not close the install banner"
           assert 'img src="/icons/icon-192.svg"' in script, "install banner still uses the legacy icon"
           assert "isMobile ? 850 : 1400" in script, "install banner timing changed unexpectedly"
+          for homepage in ("index.html", "fr/index.html", "en/index.html"):
+              html = (root / homepage).read_text(encoding="utf-8")
+              assert 'data-editorial-video-controls' in html, f"{homepage}: missing editorial video controls"
+              assert 'data-editorial-video-play' in html, f"{homepage}: missing play/pause button"
+              assert 'data-editorial-video-mute' in html, f"{homepage}: missing mute button"
+          assert "video.dataset.userPaused === 'true'" in script, "manual pause is not preserved by autoplay"
+          assert "editorialVideo.muted = !editorialVideo.muted" in script, "mute toggle missing"
 
           png = (root / "icons/icon-512.png").read_bytes()
           assert png[:8] == b"\x89PNG\r\n\x1a\n", "icon-512.png is not a PNG"

@@ -649,24 +649,24 @@
   };
 
   const playVideo = video => {
-    if (!video || document.hidden) return;
+    if (!video || document.hidden || video.dataset.userPaused === 'true') return;
 
-    // Keep autoplay eligible on mobile browsers (especially Android/iOS).
-    // Only initialize muted state when autoplay has not been initialized yet,
-    // so a deliberate user unmute is not silently undone later.
+    // Initialize autoplay silently once. Afterwards, preserve the sound state
+    // chosen by the visitor with the editorial video controls.
     if (video.dataset.autoplayReady !== 'true') {
       video.muted = true;
       video.defaultMuted = true;
+      video.setAttribute('muted', '');
       video.dataset.autoplayReady = 'true';
     }
 
     video.playsInline = true;
-    video.setAttribute('muted', '');
     video.setAttribute('playsinline', '');
     video.setAttribute('webkit-playsinline', '');
     video.setAttribute('autoplay', '');
 
     const attempt = () => {
+      if (video.dataset.userPaused === 'true' || document.hidden) return;
       const promise = video.play();
       if (promise && typeof promise.catch === 'function') {
         promise.catch(() => {
@@ -774,6 +774,83 @@
       autoplayVideos.forEach(playVideo);
     }
   });
+
+  // ---------------------------------------------------------
+  // Homepage editorial video controls
+  // ---------------------------------------------------------
+  const editorialVideo = $('.editorial-slide-video .editorial-video');
+  const editorialVideoControls = $('.editorial-slide-video [data-editorial-video-controls]');
+
+  if (editorialVideo && editorialVideoControls) {
+    const playButton = editorialVideoControls.querySelector('[data-editorial-video-play]');
+    const muteButton = editorialVideoControls.querySelector('[data-editorial-video-mute]');
+    const isEnglish = locale === 'en';
+
+    const icons = {
+      play: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.4v13.2c0 .8.9 1.3 1.6.8l10-6.6a1 1 0 0 0 0-1.6l-10-6.6c-.7-.5-1.6 0-1.6.8Z" fill="currentColor"/></svg>',
+      pause: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.8v14H7zM13.2 5H17v14h-3.8z" fill="currentColor"/></svg>',
+      muted: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/><path d="m17 9 5 6m0-6-5 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+      sound: '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/><path d="M16 9a5 5 0 0 1 0 6m2.5-8.5a8.5 8.5 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+    };
+
+    const labels = isEnglish
+      ? { play: 'Play video', pause: 'Pause video', unmute: 'Turn sound on', mute: 'Mute video' }
+      : { play: 'Lire la vidéo', pause: 'Mettre la vidéo en pause', unmute: 'Activer le son', mute: 'Couper le son' };
+
+    const refreshEditorialControls = () => {
+      if (playButton) {
+        const paused = editorialVideo.paused;
+        playButton.innerHTML = paused ? icons.play : icons.pause;
+        playButton.setAttribute('aria-label', paused ? labels.play : labels.pause);
+        playButton.setAttribute('title', paused ? labels.play : labels.pause);
+        playButton.setAttribute('aria-pressed', String(!paused));
+        playButton.classList.toggle('is-active', !paused);
+      }
+
+      if (muteButton) {
+        const muted = editorialVideo.muted;
+        muteButton.innerHTML = muted ? icons.muted : icons.sound;
+        muteButton.setAttribute('aria-label', muted ? labels.unmute : labels.mute);
+        muteButton.setAttribute('title', muted ? labels.unmute : labels.mute);
+        muteButton.setAttribute('aria-pressed', String(muted));
+        muteButton.classList.toggle('is-active', !muted);
+      }
+    };
+
+    playButton?.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (editorialVideo.paused) {
+        delete editorialVideo.dataset.userPaused;
+        playVideo(editorialVideo);
+      } else {
+        editorialVideo.dataset.userPaused = 'true';
+        editorialVideo.pause();
+      }
+      refreshEditorialControls();
+    });
+
+    muteButton?.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      editorialVideo.muted = !editorialVideo.muted;
+      editorialVideo.defaultMuted = editorialVideo.muted;
+      if (editorialVideo.muted) {
+        editorialVideo.setAttribute('muted', '');
+      } else {
+        editorialVideo.removeAttribute('muted');
+      }
+      refreshEditorialControls();
+    });
+
+    ['play', 'playing', 'pause', 'volumechange', 'loadedmetadata'].forEach(type => {
+      editorialVideo.addEventListener(type, refreshEditorialControls, { passive: true });
+    });
+
+    refreshEditorialControls();
+  }
 
   // ---------------------------------------------------------
   // Hero video controls preserved for pages that use them
