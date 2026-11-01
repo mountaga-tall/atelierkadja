@@ -12,19 +12,57 @@
       : pathParts[pathParts.length - 1]
   ) || 'index.html';
 
-  // Shared navigation: expose the Cassandre Blazers collection in both languages.
+  // Shared collection navigation: keep Blazers available and remove obsolete Coming Soon links.
   const installBlazersMenuLink = () => {
     const menu = document.querySelector('.nav-collection-menu .mega-menu');
-    if (!menu || menu.querySelector('[data-nav-blazers]') || menu.querySelector('a[href="/' + locale + '/blazers.html"]')) return;
-    const group = document.createElement('div');
-    group.className = 'mega-group';
-    group.dataset.navBlazers = 'true';
+    if (!menu) return;
+
+    const blazersUrl = '/' + locale + '/blazers.html';
+
+    menu.querySelectorAll('a[href*="coming-soon.html#blazers"]').forEach(link => {
+      link.setAttribute('href', blazersUrl);
+      link.textContent = 'Blazers';
+    });
+
+    menu.querySelectorAll('.mega-group-title[href*="/pantalons.html"]').forEach(title => {
+      const label = title.textContent.trim().toLocaleLowerCase();
+      if (label === 'compléments' || label === 'accessories') {
+        title.textContent = locale === 'en' ? 'Trousers' : 'Pantalons';
+      }
+    });
+
+    const hasBlazers = [...menu.querySelectorAll('a')].some(link => {
+      const href = link.getAttribute('href') || '';
+      return href === blazersUrl || href.endsWith('/blazers.html');
+    });
+
+    if (hasBlazers) return;
+
+    const groups = [...menu.querySelectorAll('.mega-group')];
+    const trousersGroup = groups.find(group =>
+      group.querySelector('.mega-group-title[href*="/pantalons.html"]')
+    );
+
     const link = document.createElement('a');
-    link.className = 'mega-group-title';
-    link.href = '/' + locale + '/blazers.html';
+    link.href = blazersUrl;
     link.textContent = 'Blazers';
-    group.appendChild(link);
-    menu.appendChild(group);
+
+    if (trousersGroup) {
+      const swimwearLink = [...trousersGroup.querySelectorAll('a')].find(a =>
+        (a.getAttribute('href') || '').includes('/maillots-de-bain.html')
+      );
+      if (swimwearLink) swimwearLink.insertAdjacentElement('afterend', link);
+      else trousersGroup.appendChild(link);
+    } else {
+      const group = document.createElement('div');
+      group.className = 'mega-group';
+      const title = document.createElement('a');
+      title.className = 'mega-group-title';
+      title.href = blazersUrl;
+      title.textContent = 'Blazers';
+      group.appendChild(title);
+      menu.appendChild(group);
+    }
   };
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', installBlazersMenuLink, { once: true });
@@ -146,6 +184,8 @@
     "Je souhaite échanger avec la maison au sujet de ma demande.": "I would like to discuss my request with the house.",
     "Rendez-vous · commande · information": "Appointment · order · information",
     "Votre demande": "Your request",
+    "Votre nom": "Your name",
+    "Dites-nous ce que vous recherchez…": "Tell us what you are looking for…",
     "Votre demande, directement sur WhatsApp.": "Your request, directly on WhatsApp.",
     "Informations produit": "Product information",
     "Prochaine sélection": "Next selection",

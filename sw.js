@@ -1,103 +1,114 @@
-const CACHE = 'atelier-kadja-v34-20261031-premium-install-modal';
+'use strict';
+
+const CACHE = 'atelier-kadja-v35-20261101-stable-cache';
 
 const APP_SHELL = [
-  "./", "./index.html", "./styles.css", "./script.js", "./manifest.json",
-  "./fr/index.html", "./fr/manifest.json",
-  "./en/index.html", "./en/manifest.json",
-  "./fr/nouveautes.html", "./en/nouveautes.html",
-  "./fr/blazers.html", "./en/blazers.html",
-  "./fr/robes.html", "./en/robes.html",
-  "./fr/robes-volantes.html", "./en/robes-volantes.html",
-  "./fr/caftans-atypiques.html", "./en/caftans-atypiques.html",
-  "./images/NOUVEAUTÉS/cassmarper.webp",
-  "./images/NOUVEAUTÉS/Cassmarr.webp",
-  "./images/NOUVEAUTÉS/cassrosper.webp",
-  "./images/NOUVEAUTÉS/caftanatyp5.webp",
-  "./images/NOUVEAUTÉS/kanynoir.webp",
-  "./images/NOUVEAUTÉS/kanynoirb.webp",
-  "./images/NOUVEAUTÉS/kanyrose.webp",
-  "./images/NOUVEAUTÉS/kanyroseb.webp",
-  "./images/NOUVEAUTÉS/maliaros.webp",
-  "./images/NOUVEAUTÉS/maliarosb.webp",
-  "./images/NOUVEAUTÉS/maliajau.webp",
-  "./images/NOUVEAUTÉS/maliaver.webp",
-  "./icons/icon-192.png", "./icons/icon-512.png", "./icons/kadja-mark.png",
-  "./404.html"
+  './',
+  './index.html',
+  './styles.css',
+  './script.js',
+  './localized-loader.js',
+  './manifest.json',
+  './fr/index.html',
+  './fr/manifest.json',
+  './en/index.html',
+  './en/manifest.json',
+  './fr/nouveautes.html',
+  './en/nouveautes.html',
+  './fr/blazers.html',
+  './en/blazers.html',
+  './fr/contact.html',
+  './en/contact.html',
+  './fr/la-maison.html',
+  './en/la-maison.html',
+  './fr/sur-mesure.html',
+  './en/sur-mesure.html',
+  './images/NOUVEAUTÉS/cassmarper.webp',
+  './icons/icon-192.png',
+  './icons/icon-192.svg',
+  './icons/icon-512.png',
+  './icons/kadja-mark.png',
+  './404.html'
 ];
 
-const isSameOrigin = request => new URL(request.url).origin === location.origin;
+const isSameOrigin = request => new URL(request.url).origin === self.location.origin;
 const isDocumentRequest = request =>
+  request.mode === 'navigate' ||
   request.destination === 'document' ||
   request.headers.get('accept')?.includes('text/html');
 
+const canonicalRequestUrl = request => {
+  const url = new URL(request.url);
+  url.search = '';
+  url.hash = '';
+  return url.href;
+};
+
 self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE)
-      .then(cache => cache.addAll(APP_SHELL))
-      .catch(() => {})
-      .then(() => self.skipWaiting())
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE);
+    // One missing optional shell asset must not cancel the entire installation.
+    await Promise.allSettled(APP_SHELL.map(async path => {
+      const url = new URL(path, self.registration.scope).href;
+      const response = await fetch(url, { cache: 'reload' });
+      if (!response.ok) throw new Error('Unable to cache ' + url);
+      await cache.put(url, response);
+    }));
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(
-        keys.filter(key => key !== CACHE).map(key => caches.delete(key))
-      ))
-      .then(() => self.clients.claim())
-  );
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys
+      .filter(key => key.startsWith('atelier-kadja-') && key !== CACHE)
+      .map(key => caches.delete(key)));
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener('fetch', event => {
   const request = event.request;
-  if (request.method !== 'GET') return;
+  if (request.method !== 'GET' || !isSameOrigin(request)) return;
 
-  // MP4 must keep native byte-range streaming. Never cache video/range requests.
-  const isVideoRequest = request.destination === 'video' || request.headers.has('range');
-  if (isVideoRequest) {
+  // Preserve native streaming and byte-range support for MP4/video.
+  if (request.destination === 'video' || request.headers.has('range')) {
     event.respondWith(fetch(request));
     return;
   }
 
-  // Code assets use stale-while-revalidate: cached code renders immediately,
-  // while the network refreshes it in the background.
-  const isCodeAsset = /\/(?:styles|script)\.js$/.test(new URL(request.url).pathname) ||
-    /\/styles\.css$/.test(new URL(request.url).pathname);
-  if (isCodeAsset) {
-    event.respondWith(
-      caches.match(request).then(cached => {
-        const network = fetch(request, { cache: 'no-store' })
-          .then(response => {
-            if (response.ok && isSameOrigin(request)) {
-              const copy = response.clone();
-              caches.open(CACHE).then(cache => cache.put(request, copy)).catch(() => {});
-            }
-            return response;
-          })
-          .catch(() => cached || Response.error());
-
-        return cached || network;
-      })
-    );
+  if (isDocumentRequest(request)) {
+    event.respondWith((async () => {
+      try {
+        const response = await fetch(request);
+        if (response.ok) {
+          const cache = await caches.open(CACHE);
+          await cache.put(canonicalRequestUrl(request), response.clone());
+        }
+        return response;
+      } catch (_) {
+        const cached = await caches.match(request, { ignoreSearch: true });
+        if (cached) return cached;
+        return (await caches.match(new URL('./404.html', self.registration.scope).href)) || Response.error();
+      }
+    })());
     return;
   }
 
-  event.respondWith(
-    caches.match(request).then(cached => {
-      if (cached) return cached;
-      return fetch(request).then(response => {
-        if (response.ok && isSameOrigin(request)) {
-          const copy = response.clone();
-          caches.open(CACHE).then(cache => cache.put(request, copy)).catch(() => {});
-        }
-        return response;
-      }).catch(() => {
-        // Never return HTML as a fallback for an image/video/other asset.
-        return isDocumentRequest(request)
-          ? caches.match('./404.html')
-          : Response.error();
-      });
-    })
-  );
+  event.respondWith((async () => {
+    const cached = await caches.match(request, { ignoreSearch: true });
+    if (cached) return cached;
+
+    try {
+      const response = await fetch(request);
+      if (response.ok) {
+        const cache = await caches.open(CACHE);
+        await cache.put(canonicalRequestUrl(request), response.clone());
+      }
+      return response;
+    } catch (_) {
+      return Response.error();
+    }
+  })());
 });

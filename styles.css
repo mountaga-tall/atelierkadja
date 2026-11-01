@@ -4055,3 +4055,25 @@ body.app-install-open{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
   .app-install-banner.app-install-overlay,.app-install-modal{transition:none!important}
 }
+
+
+/* Keyboard accessibility: keep focus visible across every page and menu. */
+:focus-visible{
+  outline:2px solid var(--kadja-gold,#b99a4a);
+  outline-offset:3px;
+}
+
+.site-menu a:focus-visible,
+.nav-toggle:focus-visible,
+button:focus-visible,
+summary:focus-visible{
+  outline-offset:4px;
+}
+
+@media (max-width:900px){
+  .mega-menu{
+    max-height:min(68dvh,560px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+}
