@@ -1,0 +1,66 @@
+name: Atelier Kadja — quality checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate JavaScript syntax
+        run: |
+          node --check script.js
+          node --check sw.js
+          node --check localized-loader.js
+
+      - name: Audit pages, links, media and language consistency
+        run: python3 scripts/check-site.py
+
+      - name: Validate PWA manifests, icons and sitemap
+        run: |
+          python3 - <<'PY'
+          import json
+          import struct
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          root = Path(".")
+          for manifest_path in ("manifest.json", "fr/manifest.json", "en/manifest.json"):
+              manifest = json.loads((root / manifest_path).read_text(encoding="utf-8"))
+              assert manifest.get("icons"), f"{manifest_path}: no icons defined"
+              for icon in manifest["icons"]:
+                  icon_path = root / icon["src"].lstrip("/")
+                  assert icon_path.is_file(), f"{manifest_path}: missing {icon_path}"
+
+          png = (root / "icons/icon-512.png").read_bytes()
+          assert png[:8] == b"\x89PNG\r\n\x1a\n", "icon-512.png is not a PNG"
+          width, height = struct.unpack(">II", png[16:24])
+          assert (width, height) == (512, 512), f"icon-512.png is {width}x{height}"
+
+          svg = ET.parse(root / "icons/icon-192.svg").getroot()
+          assert svg.attrib.get("width") == "192" and svg.attrib.get("height") == "192", "icon-192.svg dimensions are incorrect"
+
+          sitemap = ET.parse(root / "sitemap.xml").getroot()
+          ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+          urls = [node.text for node in sitemap.findall("sm:url/sm:loc", ns)]
+          assert len(urls) == len(set(urls)), "sitemap contains duplicate URLs"
+
+          expected = {
+              "https://atelierkadja.com/" + path.as_posix()
+              for lang in ("fr", "en")
+              for path in (root / lang).glob("*.html")
+              if path.name != "sitemap.html"
+          }
+          assert set(urls) == expected, f"sitemap mismatch: {len(expected - set(urls))} missing, {len(set(urls) - expected)} unexpected"
+          print(f"Validated {len(urls)} localized URLs, 3 manifests and PWA icons ({width}x{height}).")
+          PY
