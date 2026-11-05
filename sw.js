@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE = 'atelier-kadja-v43-20261101-orphan-cleanup';
+const CACHE = 'atelier-kadja-v44-20261105-heromob1-refresh';
 
 const APP_SHELL = [
   './',
